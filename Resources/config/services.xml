@@ -1,0 +1,38 @@
+<?xml version="1.0" ?>
+
+<container xmlns="http://symfony.com/schema/dic/services"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+    <!--
+    <parameters>
+        <parameter key="cypress_git_elephant.example.class">Cypress\GitElephantBundle\Example</parameter>
+    </parameters>
+
+    <services>
+        <service id="cypress_git_elephant.example" class="%cypress_git_elephant.example.class%">
+            <argument type="service" id="service_id" />
+            <argument>plain_value</argument>
+            <argument>%parameter_name%</argument>
+        </service>
+    </services>
+    -->
+    <parameters>
+        <parameter key="cypress_git_elephant.binary.class">GitElephant\GitBinary</parameter>
+        <parameter key="cypress_git_elephant.repository.class">GitElephant\Repository</parameter>
+    </parameters>
+
+    <services>
+        <service id="cypress_git_elephant.git_binary"
+                 class="%cypress_git_elephant.binary.class%"
+                 public="false">
+            <argument>%cypress_git_elephant.binary_path%</argument>
+        </service>
+
+        <service id="cypress_git_elephant.repository"
+                class="%cypress_git_elephant.repository.class%">
+            <argument>%cypress_git_elephant.repository_path%</argument>
+            <argument type="service" id="cypress_git_elephant.git_binary" />
+        </service>
+    </services>
+</container>
