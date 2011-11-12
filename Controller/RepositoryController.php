@@ -15,10 +15,8 @@ class RepositoryController extends Controller
      */
     public function treeAction(Request $request)
     {
-        $tree = $this->getRepository()->getNestedTree();
-        die();
         return array(
-            'tree' => $this->getRepository()->getTree($request->get('path')),
+            'tree' => $this->getRepository()->getNestedTree($request->get('path')),
             'status' => $this->getRepository()->getStatus()
         );
     }
