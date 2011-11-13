@@ -2,24 +2,25 @@
 
 {% block body %}
     <h1>Repository</h1>
-
     <ul>
-    {% if app.request.get('path') != '' %}
-        <li><a href="#">go back</a></li>
-    {% endif %}
-    {% for node in tree %}
-        {% if node.tree %}
-            <li><a href="{{ path('repository_tree', {'ref': 'master', 'treeish_path': node.name}) }} ">{{ node.name }}</a></li>
-        {% else %}
-            <li>{{ node.name }}</li>
+        {% if app.request.get('path') != '' %}
+            <li><a href="#">go back</a></li>
         {% endif %}
-    {% else %}
-        <li>Empty repository</li>
-    {% endfor %}
+        {% for node in tree %}
+            {% if node.tree %}
+                <li><a href="{{ path('repository_tree', {'ref': app.request.get('ref'), 'treeish_path': node.name}) }} ">{{ node.name }}</a></li>
+            {% else %}
+                <li>{{ node.name }}</li>
+            {% endif %}
+        {% else %}
+            <li>Empty repository</li>
+        {% endfor %}
     </ul>
 
-    <h2>status</h2>
-    {% for line in status %}
-    <p>{{ line }}</p>
-    {% endfor %}
+    <h1>Branches</h1>
+    <ul>
+        {% for branch in branches %}
+            <li><a href="{{ path('repository_branch', { 'ref': branch.name }) }}">{{ branch.name }}</a></li>
+        {% endfor %}
+    </ul>
 {% endblock %}

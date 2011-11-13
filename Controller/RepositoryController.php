@@ -17,7 +17,20 @@ class RepositoryController extends Controller
     {
         return array(
             'tree' => $this->getRepository()->getTree(),
-            'status' => $this->getRepository()->getStatus()
+            'branches' => $this->getRepository()->getBranches()
+        );
+    }
+
+    /**
+     * @Route("/tree/{ref}", name="repository_branch")
+     * @Template("CypressGitElephantBundle:Repository:root.html.twig")
+     */
+    public function branchAction($ref)
+    {
+        var_dump($ref);
+        return array(
+            'tree' => $this->getRepository()->getTree('', $ref),
+            'branches' => $this->getRepository()->getBranches()
         );
     }
 
@@ -28,8 +41,7 @@ class RepositoryController extends Controller
     public function treeAction(Request $request, $ref, $treeish_path)
     {
         return array(
-            'tree' => $this->getRepository()->getTree($treeish_path, $ref),
-            'status' => $this->getRepository()->getStatus()
+            'tree' => $this->getRepository()->getTree($treeish_path, $ref)
         );
     }
 

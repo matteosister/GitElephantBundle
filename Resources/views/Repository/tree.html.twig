@@ -2,16 +2,15 @@
 
 {% block body %}
     <h1>Repository</h1>
-
     <ul>
         {% if tree.parent is null %}
             <li><a href="{{ path('repository_root') }}">&larr;</a></li>
         {% else %}
-            <li><a href="{{ path('repository_tree', {'ref': 'master', 'treeish_path': tree.parent }) }}">&larr;</a></li>
+            <li><a href="{{ path('repository_tree', {'ref': app.request.get('ref'), 'treeish_path': tree.parent }) }}">&larr;</a></li>
         {% endif %}
         {% for node in tree %}
             {% if node.tree %}
-                <li><a href="{{ path('repository_tree', {'ref': 'master', 'treeish_path': app.request.get('treeish_path') ~ '/' ~ node.name}) }}">{{ node.name }}</a></li>
+                <li><a href="{{ path('repository_tree', {'ref': app.request.get('ref'), 'treeish_path': app.request.get('treeish_path') ~ '/' ~ node.name}) }}">{{ node.name }}</a></li>
             {% else %}
                 <li>{{ node.name }}</li>
             {% endif %}
@@ -19,9 +18,4 @@
             <li>Empty repository</li>
         {% endfor %}
     </ul>
-
-    <h2>status</h2>
-    {% for line in status %}
-    <p>{{ line }}</p>
-    {% endfor %}
 {% endblock %}
