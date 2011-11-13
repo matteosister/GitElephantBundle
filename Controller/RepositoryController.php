@@ -10,16 +10,30 @@ use Symfony\Component\HttpFoundation\Request;
 class RepositoryController extends Controller
 {
     /**
-     * @Route("/", name="repository_tree", defaults={"path" = ""})
+     * @Route("/", name="repository_root")
      * @Template()
      */
-    public function treeAction(Request $request)
+    public function rootAction(Request $request)
     {
         return array(
-            'tree' => $this->getRepository()->getNestedTree($request->get('path')),
+            'tree' => $this->getRepository()->getTree(),
             'status' => $this->getRepository()->getStatus()
         );
     }
+
+    /**
+     * @Route("/tree/{ref}/{treeish_path}", name="repository_tree", requirements={"treeish_path" = ".+"})
+     * @Template()
+     */
+    public function treeAction(Request $request, $ref, $treeish_path)
+    {
+        return array(
+            'tree' => $this->getRepository()->getTree($treeish_path, $ref),
+            'status' => $this->getRepository()->getStatus()
+        );
+    }
+
+
 
     /**
      * @return \GitElephant\Repository
