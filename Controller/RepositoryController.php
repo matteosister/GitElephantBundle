@@ -27,19 +27,6 @@ class RepositoryController extends Controller
     }
 
     /**
-     * @Route("/tree/{ref}", name="repository_branch")
-     * @Template("CypressGitElephantBundle:Repository:tree.html.twig")
-     *
-     * @param $ref
-     * @return RedirectResponse
-     */
-    public function branchAction($ref)
-    {
-        $this->get('session')->set('gitelephant.branch', $ref);
-        return $this->redirect($this->generateUrl('repository_root'));
-    }
-
-    /**
      * @Route("/tree/{ref}/{treeish_path}", name="repository_tree", requirements={"treeish_path" = ".+"})
      * @Template()
      *

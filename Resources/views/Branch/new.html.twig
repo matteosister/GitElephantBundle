@@ -1,0 +1,11 @@
+{% extends "CypressGitElephantBundle::base.html.twig" %}
+
+{% block content %}
+    <h2>New branch</h2>
+    <section class="box">
+        <form action="{{ path('branch_new') }}" method="post" {{ form_enctype(form) }}>
+            {{ form_widget(form) }}
+            <input type="submit" />
+        </form>
+    </section>
+{% endblock %}

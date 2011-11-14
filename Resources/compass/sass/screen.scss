@@ -31,7 +31,12 @@ ul.inline {
     @include inline-list;
 }
 
+.box {
+    @include white-box(1em);
+}
+
 a {
+    outline: none;
     color: $link-color;
     text-decoration: none;
     &:hover {
