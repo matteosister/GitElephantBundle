@@ -11,11 +11,12 @@ class RepositoryController extends Controller
 {
     /**
      * @Route("/", name="repository_root")
-     * @Template()
+     * @Template("CypressGitElephantBundle:Repository:tree.html.twig")
      */
     public function rootAction(Request $request)
     {
         return array(
+            'ref' => $this->get('session')->get('gitelephantbundle.branch', 'master'),
             'tree' => $this->getRepository()->getTree(),
             'branches' => $this->getRepository()->getBranches()
         );
@@ -23,12 +24,13 @@ class RepositoryController extends Controller
 
     /**
      * @Route("/tree/{ref}", name="repository_branch")
-     * @Template("CypressGitElephantBundle:Repository:root.html.twig")
+     * @Template("CypressGitElephantBundle:Repository:tree.html.twig")
      */
     public function branchAction($ref)
     {
-        var_dump($ref);
+        $this->get('session')->set('gitelephantbundle.branch', $ref);
         return array(
+            'ref' => $ref,
             'tree' => $this->getRepository()->getTree('', $ref),
             'branches' => $this->getRepository()->getBranches()
         );
@@ -41,11 +43,11 @@ class RepositoryController extends Controller
     public function treeAction(Request $request, $ref, $treeish_path)
     {
         return array(
-            'tree' => $this->getRepository()->getTree($treeish_path, $ref)
+            'ref' => $ref,
+            'tree' => $this->getRepository()->getTree($treeish_path, $ref),
+            'branches' => $this->getRepository()->getBranches()
         );
     }
-
-
 
     /**
      * @return \GitElephant\Repository

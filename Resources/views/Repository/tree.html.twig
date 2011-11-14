@@ -3,14 +3,20 @@
 {% block body %}
     <h1>Repository</h1>
     <ul>
-        {% if tree.parent is null %}
-            <li><a href="{{ path('repository_root') }}">&larr;</a></li>
-        {% else %}
-            <li><a href="{{ path('repository_tree', {'ref': app.request.get('ref'), 'treeish_path': tree.parent }) }}">&larr;</a></li>
+        {% if not tree.isRoot %}
+            {% if tree.parent is null %}
+                <li><a href="{{ path('repository_root') }}">&larr;</a></li>
+            {% else %}
+                <li><a href="{{ path('repository_tree', {'ref': ref, 'treeish_path': tree.parent }) }}">&larr;</a></li>
+            {% endif %}
         {% endif %}
         {% for node in tree %}
             {% if node.tree %}
-                <li><a href="{{ path('repository_tree', {'ref': app.request.get('ref'), 'treeish_path': app.request.get('treeish_path') ~ '/' ~ node.name}) }}">{{ node.name }}</a></li>
+                {% if tree.isRoot %}
+                    <li><a href="{{ path('repository_tree', {'ref': ref, 'treeish_path': app.request.get('treeish_path') ~ node.name}) }}">{{ node.name }}</a></li>
+                {% else %}
+                    <li><a href="{{ path('repository_tree', {'ref': ref, 'treeish_path': app.request.get('treeish_path') ~ '/' ~ node.name}) }}">{{ node.name }}</a></li>
+                {% endif %}
             {% else %}
                 <li>{{ node.name }}</li>
             {% endif %}
@@ -18,4 +24,13 @@
             <li>Empty repository</li>
         {% endfor %}
     </ul>
+
+    <h1>Branches</h1>
+    <ul>
+        {% for branch in branches %}
+            <li><a href="{{ path('repository_branch', { 'ref': branch.name }) }}">{{ branch.name }}</a></li>
+        {% endfor %}
+    </ul>
 {% endblock %}
+
+
