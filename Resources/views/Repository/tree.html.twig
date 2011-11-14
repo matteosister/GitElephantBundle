@@ -1,42 +1,42 @@
 {% extends "CypressGitElephantBundle::base.html.twig" %}
 
 {% block tree %}
-    <h2>Files</h2>
     {% include "CypressGitElephantBundle:Repository:breadcrumb.html.twig" %}
-    <ul class="tree">
-        {% if not tree.isRoot %}
-            {% if tree.parent is null %}
-                <li>
-                    <a class="tree back" href="{{ path('repository_root') }}">&hellip;</a>
-                </li>
-            {% else %}
-                <li>
-                    <a class="tree back" href="{{ path('repository_tree', {'ref': ref, 'treeish_path': tree.parent }) }}">&hellip;</a>
-                </li>
-            {% endif %}
-        {% endif %}
-        {% for node in tree %}
-            {% if node.tree %}
-                {% if tree.isRoot %}
+    <section class="tree">
+        <ul class="tree">
+            {% if not tree.isRoot %}
+                {% if tree.parent is null %}
                     <li>
-                        <a class="tree" href="{{ path('repository_tree', {'ref': ref, 'treeish_path': app.request.get('treeish_path') ~ node.name}) }}">{{ node.name }}</a>
+                        <a class="icon tree" href="{{ path('repository_root') }}">&hellip;</a>
                     </li>
                 {% else %}
                     <li>
-                        <a class="tree" href="{{ path('repository_tree', {'ref': ref, 'treeish_path': app.request.get('treeish_path') ~ '/' ~ node.name}) }}">{{ node.name }}</a>
+                        <a class="icon tree" href="{{ path('repository_tree', {'ref': ref, 'treeish_path': tree.parent }) }}">&hellip;</a>
                     </li>
                 {% endif %}
-            {% else %}
-                <li><a class="blob" href="#">{{ node.name }}</a></li>
             {% endif %}
-        {% else %}
-            <li class="empty">Empty repository</li>
-        {% endfor %}
-    </ul>
+            {% for node in tree %}
+                {% if node.tree %}
+                    {% if tree.isRoot %}
+                        <li>
+                            <a class="icon tree" href="{{ path('repository_tree', {'ref': ref, 'treeish_path': app.request.get('treeish_path') ~ node.name}) }}">{{ node.name }}</a>
+                        </li>
+                    {% else %}
+                        <li>
+                            <a class="icon tree" href="{{ path('repository_tree', {'ref': ref, 'treeish_path': app.request.get('treeish_path') ~ '/' ~ node.name}) }}">{{ node.name }}</a>
+                        </li>
+                    {% endif %}
+                {% else %}
+                    <li><a class="icon blob" href="#">{{ node.name }}</a></li>
+                {% endif %}
+            {% else %}
+                <li class="empty">Empty repository</li>
+            {% endfor %}
+        </ul>
+    </section>
 {% endblock %}
 
 {% block navigation %}
-    <h2>Branches</h2>
     {% include "CypressGitElephantBundle:Repository:branch_list.html.twig" %}
 {% endblock %}
 

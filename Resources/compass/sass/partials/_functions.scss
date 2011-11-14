@@ -1,0 +1,12 @@
+@mixin white-box($padding: 0.5em)
+{
+    @include border-radius($border-radius);
+    padding: $padding;
+    background-color: #FFF;
+    border: 1px solid $border-color;
+}
+
+@mixin fam3($icon) {
+    background: image-url("/bundles/cypressgitelephant/images/fam3/" + $icon) no-repeat 0.3em;
+    padding-left: 2em;
+}

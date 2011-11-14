@@ -1,0 +1,127 @@
+
+@import "compass/reset";
+@import "partials/base";
+@import 'partials/functions';
+
+
+@import url(http://fonts.googleapis.com/css?family=Ubuntu:400,700);
+
+
+body {
+    background-color: $bg-color;
+    color: $text-color;
+    font-size: 62.5%;
+    font-family: 'Ubuntu', sans-serif;
+}
+
+section.repository
+{
+    font-size: 1.2em;
+    width: 960px;
+    margin: 10px auto;
+}
+
+h2 {
+    font-size: 1.6em;
+    font-weight: bold;
+    line-height: 1.6em;
+}
+
+ul.inline {
+    @include inline-list;
+}
+
+a {
+    color: $link-color;
+    text-decoration: none;
+    &:hover {
+        color: $link-color-hover;
+    }
+    &.icon {
+        &.new {
+            @include fam3('add.png');
+        }
+        &.branch {
+            @include fam3('arrow_branch.png');
+            &.active {
+                color: #009900;
+                font-weight: bold;
+            }
+        }
+        &.house {
+             @include fam3('house.png');
+        }
+        &.tree {
+            @include fam3('folder.png');
+        }
+        &.blob {
+            @include fam3('page.png');
+        }
+    }
+}
+
+section.tree ul, ul.breadcrumb {
+    clear: left;
+    li {
+        a {
+            line-height: 2em;
+            padding: 0em 1em 0em 1em;
+            &.house {
+                padding-right: 0 !important;
+            }
+        }
+    }
+}
+
+section.tree {
+    @include white-box;
+    a {
+        display: block;
+        &:hover {
+            background-color: $bg-color !important;
+        }
+    }
+}
+
+nav {
+    margin-bottom: $gutter;
+    ul {
+        overflow: hidden;
+    }
+    li {
+        float: left;
+    }
+    a {
+        height: 1.4em;
+        display: block;
+    }
+}
+
+ul.breadcrumb {
+    $h: 2.2em;
+    margin-bottom: $gutter;
+    overflow: hidden;
+    @include white-box(0 0.5em);
+    li {
+        float: left;
+        height: $h;
+        border-right: 1px solid $border-color;
+        &.last {
+            border: none;
+        }
+        &.house a:hover {
+            background-color: transparent !important;
+        }
+        a {
+            height: $h;
+            line-height: $h;
+            display: block;
+            img {
+                vertical-align: middle;
+            }
+            &:hover {
+                background-color: $bg-color !important;
+            }
+        }
+    }
+}

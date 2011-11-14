@@ -1,13 +1,11 @@
 <ul class="breadcrumb">
-    <li>
-        <a href="{{ path('repository_root') }}">
-            <img src="{{ asset('bundles/cypressgitelephant/images/fam3/house.png') }}" title="Repository root" alt="repository root" />
-        </a>
+    <li class="house">
+        <a class="icon house" href="{{ path('repository_root') }}">&nbsp;</a>
     </li>
-    {% for label, path in tree.breadcrumb %}
-        <li>
-            <a href="{{ path('repository_tree', {'ref': ref, 'treeish_path': path }) }}">
-                {{ label }}
+    {% for bc in tree.breadcrumb %}
+        <li{{ loop.last ? ' class="last"' : '' }}>
+            <a class="icon tree" href="{{ path('repository_tree', {'ref': ref, 'treeish_path': bc.path }) }}">
+                {{ bc.label }}
             </a>
         </li>
     {% endfor %}

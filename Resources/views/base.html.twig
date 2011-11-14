@@ -1,9 +1,10 @@
 {% extends "::base.html.twig" %}
 
-{% block javascripts %}
+{% block stylesheets %}
     {{ parent() }}
-    {% stylesheets "@CypressGitElephantBundle/Resources/sass/main.scss" filter="scss" %}
-        <link rel="stylesheet" type="text/css" href="{{ asset_url }}" />
+    {% stylesheets filter="compass" output="/css/screen.css"
+        "@CypressGitElephantBundle/Resources/compass/sass/screen.scss" %}
+        <link rel="stylesheet" media="screen, projection" type="text/css" href="{{ asset_url }}" />
     {% endstylesheets %}
 {% endblock %}
 

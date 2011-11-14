@@ -15,7 +15,7 @@ class RepositoryController extends Controller
      */
     public function rootAction(Request $request)
     {
-        $ref = $this->get('session')->get('gitelephant.branch', 'master');
+        $ref = $this->getActualBranch();
         return array(
             'ref' => $ref,
             'tree' => $this->getRepository()->getTree($ref),
@@ -44,6 +44,11 @@ class RepositoryController extends Controller
             'tree' => $this->getRepository()->getTree($ref, $treeish_path),
             'branches' => $this->getRepository()->getBranches()
         );
+    }
+
+    private function getActualBranch()
+    {
+        return $this->get('session')->get('gitelephant.branch', 'master');
     }
 
     /**
