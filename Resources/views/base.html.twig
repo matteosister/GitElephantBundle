@@ -1,0 +1,17 @@
+{% extends "::base.html.twig" %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {% stylesheets "@CypressGitElephantBundle/Resources/sass/main.scss" filter="scss" %}
+        <link rel="stylesheet" type="text/css" href="{{ asset_url }}" />
+    {% endstylesheets %}
+{% endblock %}
+
+{% block body %}
+    <section class="repository">
+        <nav>
+            {% block navigation %}{% endblock %}
+        </nav>
+        {% block tree %}{% endblock %}
+    </section>
+{% endblock %}

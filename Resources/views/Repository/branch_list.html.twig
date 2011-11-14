@@ -1,0 +1,9 @@
+<ul class="menu">
+    {% for branch in branches %}
+        <li>
+            <a
+                class="branch{{ branch.name == app.session.get('gitelephant.branch') ? ' active' : '' }}"
+                href="{{ path('repository_branch', { 'ref': branch.name }) }}">{{ branch.name }}</a>
+        </li>
+    {% endfor %}
+</ul>

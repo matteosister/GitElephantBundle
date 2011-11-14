@@ -15,9 +15,10 @@ class RepositoryController extends Controller
      */
     public function rootAction(Request $request)
     {
+        $ref = $this->get('session')->get('gitelephant.branch', 'master');
         return array(
-            'ref' => $this->get('session')->get('gitelephantbundle.branch', 'master'),
-            'tree' => $this->getRepository()->getTree(),
+            'ref' => $ref,
+            'tree' => $this->getRepository()->getTree($ref),
             'branches' => $this->getRepository()->getBranches()
         );
     }
@@ -28,12 +29,8 @@ class RepositoryController extends Controller
      */
     public function branchAction($ref)
     {
-        $this->get('session')->set('gitelephantbundle.branch', $ref);
-        return array(
-            'ref' => $ref,
-            'tree' => $this->getRepository()->getTree('', $ref),
-            'branches' => $this->getRepository()->getBranches()
-        );
+        $this->get('session')->set('gitelephant.branch', $ref);
+        return $this->redirect($this->generateUrl('repository_root'));
     }
 
     /**
@@ -44,7 +41,7 @@ class RepositoryController extends Controller
     {
         return array(
             'ref' => $ref,
-            'tree' => $this->getRepository()->getTree($treeish_path, $ref),
+            'tree' => $this->getRepository()->getTree($ref, $treeish_path),
             'branches' => $this->getRepository()->getBranches()
         );
     }

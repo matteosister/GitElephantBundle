@@ -1,0 +1,61 @@
+@import url(http://fonts.googleapis.com/css?family=Ubuntu:400,700);
+@import 'partials/reset';
+
+body {
+    background-color: #EEE;
+    color: #333;
+    font-size: 62.5%;
+    font-family: 'Ubuntu', sans-serif;
+}
+
+section.repository
+{
+    font-size: 1.2em;
+    width: 960px;
+    margin: 10px auto;
+}
+
+h2 {
+    font-size: 1.6em;
+    font-weight: bold;
+    line-height: 1.6em;
+}
+
+a {
+    color: #999;
+    text-decoration: none;
+    &:hover {
+        color: #666;
+    }
+}
+
+ul.tree, ul.menu {
+    clear: left;
+    li a {
+        line-height: 1.6em;
+        padding: 0.2em 0 0.2em 1.6em;
+        &.tree {
+            background: url(/bundles/cypressgitelephant/images/fam3/folder.png) no-repeat left;
+        }
+        &.tree.root {
+            background: url(/bundles/cypressgitelephant/images/fam3/house.png) no-repeat left;
+        }
+        &.blob {
+            background: url(/bundles/cypressgitelephant/images/fam3/page.png) no-repeat left;
+        }
+        &.branch {
+            background: url(/bundles/cypressgitelephant/images/fam3/arrow_branch.png) no-repeat left;
+            &.active {
+                color: #009900;
+                font-weight: bold;
+            }
+        }
+    }
+}
+
+ul.breadcrumb {
+    li {
+        float: left;
+        padding: 0.4em 1em;
+    }
+}
