@@ -18,14 +18,20 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 class TagController extends Controller
 {
     /**
-     * @Route("/tree-tag/{ref}", name="repository_tag")
+     * @Route("/tag/{ref}", name="repository_tag")
+     * @Template("CypressGitElephantBundle:Repository:tree.html.twig")
      *
      * @param $ref
      * @return RedirectResponse
      */
     public function tagAction($ref)
     {
-        $this->get('session')->set('gitelephant.tag', $ref);
-        return $this->redirect($this->generateUrl('repository_root'));
+        $tag = $this->get('git_repository')->getTag($ref);
+        return array(
+            'ref'      => $tag->getName(),
+            'tree'     => $this->get('git_repository')->getTree($tag->getFullRef()),
+            'branches' => $this->get('git_repository')->getBranches(),
+            'tags'     => $this->get('git_repository')->getTags()
+        );
     }
 }

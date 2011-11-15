@@ -1,9 +1,9 @@
 <ul>
     <li><span class="label">{% trans %}Branches{% endtrans %}:</span></li>
-    {% for branch in branches %}
+    {% for branch in repository.branches %}
         <li>
             <a
-                class="icon branch{{ branch.name == app.session.get('gitelephant.branch') ? ' active' : '' }}"
+                class="icon branch{{ branch.name == active_branch ? ' active' : '' }}"
                 href="{{ path('repository_branch', { 'ref': branch.name }) }}">{{ branch.name }}</a>
         </li>
     {% endfor %}

@@ -1,0 +1,32 @@
+<section class="tree">
+    <ul class="tree">
+        {% if not tree.isRoot %}
+            {% if tree.parent is null %}
+                <li>
+                    <a class="icon tree" href="{{ path(baseRoute) }}">&hellip;</a>
+                </li>
+            {% else %}
+                <li>
+                    <a class="icon tree" href="{{ path(substreeRoute, {'ref': ref, 'treeish_path': tree.parent }) }}">&hellip;</a>
+                </li>
+            {% endif %}
+        {% endif %}
+        {% for node in tree %}
+            {% if node.tree %}
+                {% if tree.isRoot %}
+                    <li>
+                        <a class="icon tree" href="{{ path(substreeRoute, {'ref': ref, 'treeish_path': app.request.get('treeish_path') ~ node.name}) }}">{{ node.name }}</a>
+                    </li>
+                {% else %}
+                    <li>
+                        <a class="icon tree" href="{{ path(substreeRoute, {'ref': ref, 'treeish_path': app.request.get('treeish_path') ~ '/' ~ node.name}) }}">{{ node.name }}</a>
+                    </li>
+                {% endif %}
+            {% else %}
+                <li><a class="icon blob" href="#">{{ node.name }}</a></li>
+            {% endif %}
+        {% else %}
+            <li class="empty">Empty repository</li>
+        {% endfor %}
+    </ul>
+</section>

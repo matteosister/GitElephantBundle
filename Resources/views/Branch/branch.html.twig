@@ -9,7 +9,7 @@
     {% include "CypressGitElephantBundle:Repository:_breadcrumb.html.twig" %}
     {% include "CypressGitElephantBundle:Repository:_tree.html.twig" with {
         'tree':          tree,
-        'baseRoute':     'repository_root',
+        'baseRoute':     'repository_branch',
         'substreeRoute': 'repository_tree'
     } %}
 {% endblock %}
