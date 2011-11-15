@@ -1,11 +1,14 @@
 $text-color: #333;
 $bg-color: #EEE;
-$link-color: #999;
-$link-color-hover: #666;
+$link-color: #777;
+$link-color-hover: #222;
 $border-color: #CCC;
 $border-radius: 0.5em;
 $gutter: 1em;
 
+$default-box-shadow-color: #AAA;
+
 @import "compass/typography/lists/inline-list";
 @import "compass/css3/border-radius";
 @import "compass/css3/images";
+@import "compass/css3/box-shadow";

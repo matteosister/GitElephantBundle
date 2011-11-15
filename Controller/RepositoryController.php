@@ -23,7 +23,7 @@ class RepositoryController extends Controller
             'ref'           => $ref->getName(),
             'repository'    => $this->get('git_repository'),
             'tree'          => $this->get('git_repository')->getTree($ref->getFullRef()),
-            'active_branch' => $this->get('git_repository')->getMainBranch()->getName()
+            'active_branch' => $this->get('git_repository')->getMainBranch()
         );
     }
 

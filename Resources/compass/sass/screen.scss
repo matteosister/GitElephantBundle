@@ -65,6 +65,9 @@ a {
         &.tree {
             @include fam3('folder.png');
         }
+        &.link {
+            @include fam3('folder_go.png');
+        }
         &.blob {
             @include fam3('page.png');
         }
@@ -79,7 +82,7 @@ section.tree ul, ul.breadcrumb {
     li {
         a {
             line-height: 2em;
-            padding: 0em 1em 0em 1em;
+            padding: 0em 0.5em 0em 1em;
             &.house {
                 padding-right: 0 !important;
             }
@@ -89,10 +92,17 @@ section.tree ul, ul.breadcrumb {
 
 section.tree {
     @include white-box;
+    @include single-box-shadow;
+    li {
+        &.even {
+            background-color: $bg-color;
+        }
+    }
     a {
         display: block;
         &:hover {
-            background-color: $bg-color !important;
+            //background-color: $bg-color - #111 !important;
+            color: $link-color-hover;
         }
     }
 }
@@ -117,29 +127,40 @@ span.label {
 }
 
 ul.breadcrumb {
+    @include box-shadow($default-box-shadow-color 2px 2px 4px);
+    float: left;
     $h: 2.2em;
     margin-bottom: $gutter;
     overflow: hidden;
     @include white-box(0 0.5em);
+    @include border-radius($border-radius 0);
     li {
         float: left;
         height: $h;
-        border-right: 1px solid $border-color;
+        background: image-url("/bundles/cypressgitelephant/images/bc-separator.png") no-repeat left;
+        padding-left: 0.6em;
         &.last {
             border: none;
         }
-        &.house a:hover {
-            background-color: transparent !important;
+        &.house {
+            //border-right: 1px solid $border-color;
+            padding-left: 0;
+            background: none;
+            a:hover {
+                background-color: transparent !important;
+            }
         }
         a {
             height: $h;
             line-height: $h;
             display: block;
+            font-weight: bold;
+
             img {
                 vertical-align: middle;
             }
             &:hover {
-                background-color: $bg-color !important;
+                color: $link-color-hover;
             }
         }
     }

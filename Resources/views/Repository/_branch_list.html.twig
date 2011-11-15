@@ -3,7 +3,7 @@
     {% for branch in repository.branches %}
         <li>
             <a
-                class="icon branch{{ branch.name == active_branch ? ' active' : '' }}"
+                class="icon branch{{ branch == active_branch ? ' active' : '' }}"
                 href="{{ path('repository_branch', { 'ref': branch.name }) }}">{{ branch.name }}</a>
         </li>
     {% endfor %}

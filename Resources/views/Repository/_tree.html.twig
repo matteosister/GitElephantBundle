@@ -1,30 +1,31 @@
 <section class="tree">
     <ul class="tree">
+        {% set odd = true %}
         {% if not tree.isRoot %}
-            {% if tree.parent is null %}
-                <li>
-                    <a class="icon tree" href="{{ path(baseRoute) }}">&hellip;</a>
-                </li>
-            {% else %}
-                <li>
-                    <a class="icon tree" href="{{ path(substreeRoute, {'ref': ref, 'treeish_path': tree.parent }) }}">&hellip;</a>
-                </li>
-            {% endif %}
+            {% set odd = false %}
+            {% set first_row = true %}
+            <li class="odd">
+                <a class="icon tree" href="{{ path(subtreeRoute, {'ref': active_branch.name, 'treeish_path': tree.parent }) }}">&hellip;</a>
+            </li>
         {% endif %}
+        </li>
         {% for node in tree %}
             {% if node.tree %}
                 {% if tree.isRoot %}
-                    <li>
-                        <a class="icon tree" href="{{ path(substreeRoute, {'ref': ref, 'treeish_path': app.request.get('treeish_path') ~ node.name}) }}">{{ node.name }}</a>
+                    <li class="{{ odd ? 'odd' : 'even' }}">
+                        <a class="icon tree" href="{{ path(subtreeRoute, {'ref': ref, 'treeish_path': app.request.get('treeish_path') ~ node.name}) }}">{{ node.name }}</a>
                     </li>
                 {% else %}
-                    <li>
-                        <a class="icon tree" href="{{ path(substreeRoute, {'ref': ref, 'treeish_path': app.request.get('treeish_path') ~ '/' ~ node.name}) }}">{{ node.name }}</a>
+                    <li class="{{ odd ? 'odd' : 'even' }}">
+                        <a class="icon tree" href="{{ path(subtreeRoute, {'ref': ref, 'treeish_path': app.request.get('treeish_path') ~ '/' ~ node.name}) }}">{{ node.name }}</a>
                     </li>
                 {% endif %}
+            {% elseif node.link %}
+                <li class="{{ odd ? 'odd' : 'even' }}"><a class="icon link" href="#">{{ node.name }} ({{ node.sha }})</a></li>
             {% else %}
-                <li><a class="icon blob" href="#">{{ node.name }}</a></li>
+                <li class="{{ odd ? 'odd' : 'even' }}"><a class="icon blob" href="#">{{ node.name }}</a></li>
             {% endif %}
+            {% set odd = not odd %}
         {% else %}
             <li class="empty">Empty repository</li>
         {% endfor %}

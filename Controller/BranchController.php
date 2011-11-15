@@ -17,6 +17,25 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 
 class BranchController extends Controller
 {
+    /**
+     * @Route("/tree/{ref}", name="repository_branch")
+     * @Template()
+     *
+     * @param $ref The treeish reference
+     */
+    public function branchAction($ref)
+    {
+        $branch = $this->get('git_repository')->getBranch($ref);
+        if ($branch == $this->get('git_repository')->getMainBranch()) {
+            return $this->redirect($this->generateUrl('repository_root'));
+        }
+        return array(
+            'ref'           => $branch->getName(),
+            'repository'    => $this->get('git_repository'),
+            'tree'          => $this->get('git_repository')->getTree($branch->getFullRef()),
+            'active_branch' => $branch,
+        );
+    }
 
     /**
      * @Route("/branch/new", name="branch_new")
@@ -39,26 +58,6 @@ class BranchController extends Controller
         }
         return array(
             'form' => $form->createView()
-        );
-    }
-
-    /**
-     * @Route("/tree/{ref}", name="repository_branch")
-     * @Template()
-     *
-     * @param $ref The treeish reference
-     */
-    public function branchAction($ref)
-    {
-        $branch = $this->get('git_repository')->getBranch($ref);
-        if ($branch == $this->get('git_repository')->getMainBranch()) {
-            return $this->redirect($this->generateUrl('repository_root'));
-        }
-        return array(
-            'ref'           => $branch->getName(),
-            'repository'    => $this->get('git_repository'),
-            'tree'          => $this->get('git_repository')->getTree($branch->getFullRef()),
-            'active_branch' => $branch->getName(),
         );
     }
 }

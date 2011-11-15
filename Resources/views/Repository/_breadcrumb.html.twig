@@ -1,6 +1,6 @@
 <ul class="breadcrumb">
     <li class="house">
-        <a class="icon house" href="{{ path('repository_root') }}">&nbsp;</a>
+        <a class="icon house" href="{{ path('repository_tree', {'ref': active_branch.name, 'treeish_path': '' }) }}"></a>
     </li>
     {% for bc in tree.breadcrumb %}
         <li{{ loop.last ? ' class="last"' : '' }}>
