@@ -1,0 +1,13 @@
+<ul>
+    <li><span class="label">{% trans %}Tags{% endtrans %}:</span></li>
+    {% for tag in tags %}
+        <li>
+            <a
+                class="icon tag{{ tag.name == app.session.get('gitelephant.tag') ? ' active' : '' }}"
+                href="{{ path('repository_tag', { 'ref': tag.name }) }}">{{ tag.name }}</a>
+        </li>
+    {% endfor %}
+    <li>
+        <a href="#" class="icon new">new tag</a>
+    </li>
+</ul>

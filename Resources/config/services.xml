@@ -34,5 +34,7 @@
             <argument>%cypress_git_elephant.repository_path%</argument>
             <argument type="service" id="cypress_git_elephant.git_binary" />
         </service>
+
+        <service id="git_repository" alias="cypress_git_elephant.repository" />
     </services>
 </container>

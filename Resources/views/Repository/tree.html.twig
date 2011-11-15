@@ -1,5 +1,10 @@
 {% extends "CypressGitElephantBundle::base.html.twig" %}
 
+{% block navigation %}
+    {% include "CypressGitElephantBundle:Repository:branch_list.html.twig" %}
+    {% include "CypressGitElephantBundle:Repository:tag_list.html.twig" %}
+{% endblock %}
+
 {% block content %}
     {% include "CypressGitElephantBundle:Repository:breadcrumb.html.twig" %}
     <section class="tree">
@@ -34,10 +39,6 @@
             {% endfor %}
         </ul>
     </section>
-{% endblock %}
-
-{% block navigation %}
-    {% include "CypressGitElephantBundle:Repository:branch_list.html.twig" %}
 {% endblock %}
 
 

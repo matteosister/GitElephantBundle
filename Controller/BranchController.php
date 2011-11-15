@@ -44,7 +44,6 @@ class BranchController extends Controller
 
     /**
      * @Route("/tree/{ref}", name="repository_branch")
-     * @Template("CypressGitElephantBundle:Repository:tree.html.twig")
      *
      * @param $ref
      * @return RedirectResponse

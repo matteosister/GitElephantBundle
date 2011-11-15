@@ -21,6 +21,12 @@ section.repository
     margin: 10px auto;
 }
 
+h1 {
+    font-size: 2em;
+    font-weight: bold;
+    line-height: 2em;
+}
+
 h2 {
     font-size: 1.6em;
     font-weight: bold;
@@ -62,6 +68,9 @@ a {
         &.blob {
             @include fam3('page.png');
         }
+        &.tag {
+            @include fam3('tag_green.png');
+        }
     }
 }
 
@@ -92,6 +101,7 @@ nav {
     margin-bottom: $gutter;
     ul {
         overflow: hidden;
+        margin-bottom: 0.5em;
     }
     li {
         float: left;
@@ -100,6 +110,10 @@ nav {
         height: 1.4em;
         display: block;
     }
+}
+
+span.label {
+    font-weight: bold;
 }
 
 ul.breadcrumb {
