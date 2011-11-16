@@ -3,9 +3,19 @@
 {% block stylesheets %}
     {{ parent() }}
     {% stylesheets filter="compass" output="/css/screen.css"
-        "@CypressGitElephantBundle/Resources/compass/sass/screen.scss" %}
+        "@CypressGitElephantBundle/Resources/compass/sass/screen.scss"
+        "@CypressGitElephantBundle/Resources/compass/sass/ie.scss" %}
         <link rel="stylesheet" media="screen, projection" type="text/css" href="{{ asset_url }}" />
     {% endstylesheets %}
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script type="text/javascript" src="{{ asset('bundles/cypressgitelephant/js/jquery-1.7.min.js') }}"></script>
+    {% javascripts filter="coffee" output="/js/scripts.js"
+         "@CypressGitElephantBundle/Resources/coffee/global.coffee" %}
+        <script type="text/javascript" src="{{ asset_url }}"></script>
+    {% endjavascripts %}
 {% endblock %}
 
 {% block body %}

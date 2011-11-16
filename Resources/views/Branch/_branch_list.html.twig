@@ -1,0 +1,13 @@
+{% block javascripts %}
+
+{% endblock %}
+
+<ul class="dropdown">
+    <li class="label">{% trans %}Branches{% endtrans %}</li>
+    {% for branch in repository.branches %}
+        <li>
+            <a class="icon branch{{ branch == active_branch ? ' active' : '' }}"
+                href="{{ path('repository_branch', { 'ref': branch.name }) }}">{{ branch.name }}</a>
+        </li>
+    {% endfor %}
+</ul>

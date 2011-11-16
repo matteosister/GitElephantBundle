@@ -19,12 +19,14 @@ section.repository
     font-size: 1.2em;
     width: 960px;
     margin: 10px auto;
+    position: relative;
 }
 
 h1 {
     font-size: 2em;
     font-weight: bold;
     line-height: 2em;
+    @include text-shadow(#AAA 0 0 5px);
 }
 
 h2 {
@@ -109,31 +111,34 @@ section.tree {
 
 nav {
     margin-bottom: $gutter;
+    height: 2.2em;
     ul {
-        overflow: hidden;
-        margin-bottom: 0.5em;
-    }
-    li {
         float: left;
+        margin-bottom: 0.5em;
+        li {
+            float: left;
+            height: 1.4em;
+            line-height: 1.4em;
+        }
     }
     a {
         height: 1.4em;
         display: block;
+        text-wrap: none;
     }
 }
 
-span.label {
+.label {
     font-weight: bold;
 }
 
 ul.breadcrumb {
-    @include box-shadow($default-box-shadow-color 2px 2px 4px);
-    float: left;
+    //@include box-shadow($default-box-shadow-color 2px 2px 4px);
+    //float: left;
     $h: 2.2em;
-    margin-bottom: $gutter;
+    margin-bottom: $gutter / 2;
     overflow: hidden;
     @include white-box(0 0.5em);
-    @include border-radius($border-radius 0);
     li {
         float: left;
         height: $h;

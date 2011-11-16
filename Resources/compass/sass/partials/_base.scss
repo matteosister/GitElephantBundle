@@ -6,9 +6,10 @@ $border-color: #CCC;
 $border-radius: 0.5em;
 $gutter: 1em;
 
-$default-box-shadow-color: #AAA;
+$default-box-shadow-color: #CCC;
 
 @import "compass/typography/lists/inline-list";
 @import "compass/css3/border-radius";
 @import "compass/css3/images";
 @import "compass/css3/box-shadow";
+@import "compass/css3/text-shadow";

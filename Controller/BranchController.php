@@ -36,28 +36,4 @@ class BranchController extends Controller
             'active_branch' => $branch,
         );
     }
-
-    /**
-     * @Route("/branch/new", name="branch_new")
-     * @Method({"GET", "POST"})
-     * @Template()
-     */
-    public function newAction(Request $request)
-    {
-        $form = $this->createFormBuilder()
-                ->add('name', null, array())
-                ->getForm();
-
-        if ($request->getMethod() == 'POST') {
-            $form->bindRequest($request);
-            if ($form->isValid()) {
-                $data = $form->getData();
-                $this->get('cypress_git_elephant.repository')->createBranch($data['name']);
-                return $this->redirect($this->generateUrl('repository_branch', array('ref' => $data['name'])));
-            }
-        }
-        return array(
-            'form' => $form->createView()
-        );
-    }
 }
