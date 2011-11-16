@@ -1,7 +1,7 @@
 <section class="tree">
     <ul class="tree">
         {% set odd = true %}
-        {% if not tree.isRoot %}
+        {% if not tree.isRoot and not tree.blob %}
             {% set odd = false %}
             {% set first_row = true %}
             <li class="odd">
@@ -11,23 +11,23 @@
         </li>
         {% for node in tree %}
             {% if node.tree %}
-                {% if tree.isRoot %}
-                    <li class="{{ odd ? 'odd' : 'even' }}">
-                        <a class="icon tree" href="{{ path(subtreeRoute, {'ref': ref, 'treeish_path': app.request.get('treeish_path') ~ node.name}) }}">{{ node.name }}</a>
-                    </li>
-                {% else %}
-                    <li class="{{ odd ? 'odd' : 'even' }}">
-                        <a class="icon tree" href="{{ path(subtreeRoute, {'ref': ref, 'treeish_path': app.request.get('treeish_path') ~ '/' ~ node.name}) }}">{{ node.name }}</a>
-                    </li>
-                {% endif %}
+                {% set full_path = app.request.get('treeish_path') ~ (tree.isRoot ? '' : '/') ~ node.name %}
+                <li class="{{ odd ? 'odd' : 'even' }}">
+                    <a class="icon tree" href="{{ path(subtreeRoute, {'ref': ref, 'treeish_path': full_path}) }}">{{ node.name }}</a>
+                </li>
             {% elseif node.link %}
                 <li class="{{ odd ? 'odd' : 'even' }}"><a class="icon link" href="#">{{ node.name }} ({{ node.sha }})</a></li>
             {% else %}
-                <li class="{{ odd ? 'odd' : 'even' }}"><a class="icon blob" href="#">{{ node.name }}</a></li>
+                {% set full_path = app.request.get('treeish_path') ~ (tree.isRoot ? '' : '/') ~ node.name %}
+                <li class="{{ odd ? 'odd' : 'even' }}"><a class="icon blob" href="{{ path(subtreeRoute, {'ref': ref, 'treeish_path': full_path }) }}">{{ node.name }}</a></li>
             {% endif %}
             {% set odd = not odd %}
         {% else %}
-            <li class="empty">Empty repository</li>
+            {% if tree.blob %}
+                file
+            {% else %}
+                <li class="empty">Empty repository</li>
+            {% endif %}
         {% endfor %}
     </ul>
 </section>
