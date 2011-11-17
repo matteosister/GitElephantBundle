@@ -1,5 +1,9 @@
 {% extends "CypressGitElephantBundle::base.html.twig" %}
 
+{% block title %}
+    {{ tree.path }}{{ tree.blob is not null ? '/' ~ tree.blob : '' }} at {{ parent() }}
+{% endblock %}
+
 {% block navigation %}
     {% include "CypressGitElephantBundle:Branch:_branch_list.html.twig" %}
     {% include "CypressGitElephantBundle:Repository:_tag_list.html.twig" %}

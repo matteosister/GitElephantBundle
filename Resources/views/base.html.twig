@@ -1,5 +1,9 @@
 {% extends "::base.html.twig" %}
 
+{% block title %}
+    Git Repository
+{% endblock %}
+
 {% block stylesheets %}
     {{ parent() }}
     {% stylesheets filter="compass" output="/css/screen.css"

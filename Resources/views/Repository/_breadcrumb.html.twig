@@ -3,10 +3,17 @@
         <a class="icon house" href="{{ path('repository_tree', {'ref': active_branch.name, 'treeish_path': '' }) }}"></a>
     </li>
     {% for bc in tree.breadcrumb %}
-        <li{{ loop.last ? ' class="last"' : '' }}>
+        <li{{ loop.last and tree.blob is null ? ' class="last"' : '' }}>
             <a class="icon tree" href="{{ path('repository_tree', {'ref': ref, 'treeish_path': bc.path }) }}">
                 {{ bc.label }}
             </a>
         </li>
     {% endfor %}
+    {% if tree.blob is not null %}
+        <li class="last">
+            <a class="icon blob" href="#">
+                {{ tree.blob }}
+            </a>
+        </li>
+    {% endif %}
 </ul>

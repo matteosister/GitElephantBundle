@@ -1,7 +1,7 @@
 <section class="tree">
     <ul class="tree">
         {% set odd = true %}
-        {% if not tree.isRoot and not tree.blob %}
+        {% if not tree.root and not tree.blob %}
             {% set odd = false %}
             {% set first_row = true %}
             <li class="odd">
