@@ -26,7 +26,7 @@ class DiffController extends Controller
     public function diffAction($ref)
     {
         $commit = $this->get('git_repository')->getCommit($ref);
-        var_dump($commit);
+        $this->get('git_repository')->getCommitDiff($commit);
         die();
         if ($branch == $this->get('git_repository')->getMainBranch()) {
             return $this->redirect($this->generateUrl('repository_root'));
