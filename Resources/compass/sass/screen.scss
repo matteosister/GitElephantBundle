@@ -79,6 +79,13 @@ a {
     }
 }
 
+section.commit {
+    @include white-box;
+    position: absolute;
+    top: 5px;
+    right: 5px;
+}
+
 section.tree ul, ul.breadcrumb {
     clear: left;
     li {

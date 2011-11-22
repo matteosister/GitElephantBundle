@@ -1,0 +1,7 @@
+{% extends "CypressGitElephantBundle::base.html.twig" %}
+
+{% block content %}
+    <section class="commit"><a href="{{ path('repository_commit', {'ref': repository.getCommit.sha}) }}">{{ repository.getCommit.sha }}</a></section>
+    {% include "CypressGitElephantBundle:Repository:_breadcrumb.html.twig" %}
+
+{% endblock %}

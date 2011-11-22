@@ -15,27 +15,22 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 
-class DiffController extends Controller
+class CommitController extends Controller
 {
     /**
-     * @Route("/commit/{ref}", name="repository_diff")
+     * @Route("/commit/{ref}", name="repository_commit")
      * @Template()
      *
      * @param $ref The treeish reference
      */
-    public function diffAction($ref)
+    public function commitAction($ref)
     {
         $commit = $this->get('git_repository')->getCommit($ref);
-        $this->get('git_repository')->getCommitDiff($commit);
-        die();
-        if ($branch == $this->get('git_repository')->getMainBranch()) {
-            return $this->redirect($this->generateUrl('repository_root'));
-        }
+        $diff = $this->get('git_repository')->getCommitDiff($commit);
         return array(
-            'ref'           => $branch->getName(),
             'repository'    => $this->get('git_repository'),
-            'tree'          => $this->get('git_repository')->getTree($branch->getFullRef()),
-            'active_branch' => $branch,
+            'commit'        => $commit,
+            'diff'          => $diff
         );
     }
 }
