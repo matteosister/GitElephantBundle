@@ -1,0 +1,25 @@
+{% extends "CypressGitElephantBundle::base.html.twig" %}
+
+{% block content %}
+    <section class="content">
+        {% for diff_object in diff %}
+            <table class="diff{{ loop.last ? ' last' : '' }}">
+                <thead>
+                    <tr>
+                        <th colspan="2">{{ diff_object }}</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for chunk in diff_object %}
+                        {% for line in chunk %}
+                            <tr class="{{ line.type }}">
+                                <td class="ln">{{ line.number }}</td>
+                                <td class="text">{{ line.content }}</td>
+                            </tr>
+                        {% endfor %}
+                    {% endfor %}
+                </tbody>
+            </table>
+        {% endfor %}
+    </section>
+{% endblock %}

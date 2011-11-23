@@ -23,7 +23,7 @@ class CommitController extends Controller
      *
      * @param $ref The treeish reference
      */
-    public function commitAction($ref)
+    public function showAction($ref)
     {
         $commit = $this->get('git_repository')->getCommit($ref);
         $diff = $this->get('git_repository')->getCommitDiff($commit);

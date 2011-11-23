@@ -105,6 +105,46 @@ section.tree ul, ul.breadcrumb {
     }
 }
 
+section.content {
+    @include white-box;
+    @include single-box-shadow;
+    table.diff {
+        margin-bottom: 2em;
+        &.last {
+            margin-bottom: 0;
+        }
+        th {
+            border: 1px solid #CCC;
+            padding: 5px;
+        }
+        tbody {
+            border: 1px solid #CCC;
+        }
+        tr.unchanged {
+            color: #AAA;
+        }
+        tr.added {
+            background-color: #deffb7;
+            color: green;
+            font-weight: bold;
+        }
+        tr.deleted {
+            background-color: #ffd0d0;
+            color: #ff8285;
+            font-weight: bold;
+        }
+        td.ln {
+            padding: 4px 10px;
+            vertical-align: top;
+        }
+        td.text {
+            padding: 2px 0;
+            font-size: 1.2em;
+            line-height: 1.3em;
+        }
+    }
+}
+
 section.tree {
     @include white-box;
     @include single-box-shadow;
