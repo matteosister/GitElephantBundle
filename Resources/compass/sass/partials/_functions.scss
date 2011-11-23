@@ -7,7 +7,3 @@
     border: 1px solid $border-color;
 }
 
-@mixin fam3($icon) {
-    background: image-url("/bundles/cypressgitelephant/images/fam3/" + $icon) no-repeat 0.3em;
-    padding-left: 2em;
-}

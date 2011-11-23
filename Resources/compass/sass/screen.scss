@@ -43,6 +43,12 @@ ul.inline {
     @include white-box(1em);
 }
 
+@mixin fam3($icon) {
+    background: image-url("fam3/" + $icon) no-repeat 0.3em;
+
+    padding-left: 2em;
+}
+
 a {
     outline: none;
     color: $link-color;
