@@ -109,6 +109,7 @@ section.content {
     @include white-box;
     @include single-box-shadow;
     table.diff {
+        width: 100%;
         margin-bottom: 2em;
         &.last {
             margin-bottom: 0;
@@ -136,6 +137,8 @@ section.content {
         td.ln {
             padding: 4px 10px;
             vertical-align: top;
+            border-right: 1px solid #
+            width: 60px;
         }
         td.text {
             padding: 2px 0;
