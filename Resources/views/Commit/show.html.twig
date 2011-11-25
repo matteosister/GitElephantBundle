@@ -13,10 +13,16 @@
                     {% for chunk in diff_object %}
                         {% for line in chunk %}
                             <tr class="{{ line.type }}">
-                                <td class="ln">{{ line.number }}</td>
-                                <td class="text">{{ line.content }}</td>
+                                <td class="ln">{{ line.type == 'deleted' ? '' : line.number }}</td>
+                                <td class="content indent-{{ line.indentation }}">{{ line.content }}</td>
                             </tr>
                         {% endfor %}
+                        {% if loop.index < loop.length %}
+                            <tr class="dots">
+                                <td class="ln">&nbsp;</td>
+                                <td class="text">&hellip;</td>
+                            </tr>
+                        {% endif %}
                     {% endfor %}
                 </tbody>
             </table>

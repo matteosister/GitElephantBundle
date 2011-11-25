@@ -117,9 +117,14 @@ section.content {
         th {
             border: 1px solid #CCC;
             padding: 5px;
+            font-weight: bold;
+            color: #333;
         }
         tbody {
             border: 1px solid #CCC;
+        }
+        tr.dots {
+            background-color: #EEE;
         }
         tr.unchanged {
             color: #AAA;
@@ -140,10 +145,23 @@ section.content {
             border-right: 1px solid #ccc;
             width: 60px;
         }
-        td.text {
+        td.content {
             padding: 2px 0;
             font-size: 1.2em;
             line-height: 1.3em;
+            &.indent-1 {
+                padding-left: $indent-pad;
+
+            }
+            &.indent-2 {
+                padding-left: $indent-pad * 2;
+            }
+            &.indent-3 {
+                padding-left: $indent-pad * 3;
+            }
+            &.indent-4 {
+                padding-left: $indent-pad * 4;
+            }
         }
     }
 }
