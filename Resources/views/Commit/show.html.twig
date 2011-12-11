@@ -3,7 +3,7 @@
 {% block content %}
     <section class="content">
         {% for diff_object in diff %}
-            <table class="diff{{ loop.last ? ' last' : '' }}">
+            <table class="diff{{ loop.last ? ' last' : '' }} {{ diff_object.mode }}">
                 <thead>
                     <tr>
                         <th colspan="2">{{ diff_object }}</th>
@@ -11,10 +11,15 @@
                 </thead>
                 <tbody>
                     {% for chunk in diff_object %}
-                        {% for line in chunk %}
+                        {# for line in chunk %}
                             <tr class="{{ line.type }}">
                                 <td class="ln">{{ line.type == 'deleted' ? '' : line.number }}</td>
                                 <td class="content indent-{{ line.indentation }}">{{ line.content }}</td>
+                            </tr>
+                        {% endfor #}
+                        {% for line in chunk %}
+                            <tr class="{{ line.type }}">
+                                <td colspan="2">{{ line.content }}</td>
                             </tr>
                         {% endfor %}
                         {% if loop.index < loop.length %}

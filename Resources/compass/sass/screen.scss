@@ -17,8 +17,9 @@ body {
 section.repository
 {
     font-size: 1.2em;
-    width: 960px;
+    //width: 960px;
     margin: 10px auto;
+    padding: 0 10px;
     position: relative;
 }
 
@@ -109,6 +110,9 @@ section.content {
     @include white-box;
     @include single-box-shadow;
     table.diff {
+        &.deleted_file {
+            text-decoration: line-through;
+        }
         width: 100%;
         margin-bottom: 2em;
         &.last {

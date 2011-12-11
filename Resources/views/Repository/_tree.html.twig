@@ -8,7 +8,6 @@
                 <a class="icon tree" href="{{ path(subtreeRoute, {'ref': active_branch.name, 'treeish_path': tree.parent }) }}">&hellip;</a>
             </li>
         {% endif %}
-        </li>
         {% for node in tree %}
             {% if node.tree %}
                 {% set full_path = app.request.get('treeish_path') ~ (tree.isRoot ? '' : '/') ~ node.name %}
@@ -24,7 +23,9 @@
             {% set odd = not odd %}
         {% else %}
             {% if tree.blob %}
-                file
+                <li class="content">
+                    <pre class="brush: php">{{ tree.blob.output(repository.path) }}</pre>
+                </li>
             {% else %}
                 <li class="empty">Empty repository</li>
             {% endif %}
