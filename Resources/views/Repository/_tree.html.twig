@@ -13,7 +13,10 @@
                 {% set full_path = app.request.get('treeish_path') ~ (tree.isRoot ? '' : '/') ~ node.name %}
                 <li class="{{ odd ? 'odd' : 'even' }}">
                     <a class="icon tree" href="{{ path(subtreeRoute, {'ref': ref, 'treeish_path': full_path}) }}">
-                        {{ node.name }}<span>{{ repository.getLog(node, active_branch).sha }} ({{ repository.getLog(node, active_branch).message }})</span>
+                        {{ node.name }}
+                    </a>
+                    <a class="commit" href="{{ path('repository_commit', { 'ref': repository.getLog(node, active_branch).sha }) }}">
+                        {{ repository.getLog(node, active_branch).message }} ({{ repository.getLog(node, active_branch).sha }})
                     </a>
                 </li>
             {% elseif node.link %}
@@ -22,7 +25,10 @@
                 {% set full_path = app.request.get('treeish_path') ~ (tree.isRoot ? '' : '/') ~ node.name %}
                 <li class="{{ odd ? 'odd' : 'even' }}">
                     <a class="icon blob" href="{{ path(subtreeRoute, {'ref': ref, 'treeish_path': full_path }) }}">
-                        {{ node.name }}<span>{{ repository.getLog(node, active_branch).sha }} ({{ repository.getLog(node, active_branch).message }})</span>
+                        {{ node.name }}
+                    </a>
+                    <a class="commit" href="{{ path('repository_commit', { 'ref': repository.getLog(node, active_branch).sha }) }}">
+                        {{ repository.getLog(node, active_branch).message }} ({{ repository.getLog(node, active_branch).sha }})
                     </a>
                 </li>
             {% endif %}
@@ -30,7 +36,7 @@
         {% else %}
             {% if tree.blob %}
                 <li class="content">
-                    <pre class="brush: php">{{ tree.blob.output(repository.path) }}</pre>
+                    <pre class="brush: {{ tree.blob.getExtension(repository.path) }}">{{ tree.blob.output(repository.path) }}</pre>
                 </li>
             {% else %}
                 <li class="empty">Empty repository</li>

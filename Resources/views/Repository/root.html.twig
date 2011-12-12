@@ -6,9 +6,7 @@
 {% endblock %}
 
 {% block content %}
-    <section class="commit">
-        <a href="{{ path('repository_commit', { 'ref': repository.getBranch(ref).sha }) }}">{{ repository.getBranch(ref).sha }}</a>
-    </section>
+    {{ parent() }}
     {% include "CypressGitElephantBundle:Repository:_breadcrumb.html.twig" %}
     {% include "CypressGitElephantBundle:Repository:_tree.html.twig" with {
         'tree':          tree,

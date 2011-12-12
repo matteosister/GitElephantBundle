@@ -28,6 +28,10 @@
         <nav>
             {% block navigation %}{% endblock %}
         </nav>
-        {% block content %}{% endblock %}
+        {% block content %}
+            <section class="commit">
+                <a href="{{ path('repository_commit', { 'ref': repository.getBranch(ref).sha }) }}">{{ repository.getBranch(ref).sha }}</a>
+            </section>
+        {% endblock %}
     </section>
 {% endblock %}
