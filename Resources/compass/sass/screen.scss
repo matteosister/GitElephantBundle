@@ -180,9 +180,15 @@ section.tree {
     }
     a {
         display: block;
+        font-size: 1.3em;
         &:hover {
             //background-color: $bg-color - #111 !important;
             color: $link-color-hover;
+        }
+        span {
+            padding-left: 1em;
+            color: #AAA;
+            font-size: 0.8em;
         }
     }
 }

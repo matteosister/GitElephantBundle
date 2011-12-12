@@ -12,13 +12,19 @@
             {% if node.tree %}
                 {% set full_path = app.request.get('treeish_path') ~ (tree.isRoot ? '' : '/') ~ node.name %}
                 <li class="{{ odd ? 'odd' : 'even' }}">
-                    <a class="icon tree" href="{{ path(subtreeRoute, {'ref': ref, 'treeish_path': full_path}) }}">{{ node.name }}</a>
+                    <a class="icon tree" href="{{ path(subtreeRoute, {'ref': ref, 'treeish_path': full_path}) }}">
+                        {{ node.name }}<span>{{ repository.getLog(node, active_branch).sha }} ({{ repository.getLog(node, active_branch).message }})</span>
+                    </a>
                 </li>
             {% elseif node.link %}
                 <li class="{{ odd ? 'odd' : 'even' }}"><a class="icon link" href="#">{{ node.name }} ({{ node.sha }})</a></li>
             {% else %}
                 {% set full_path = app.request.get('treeish_path') ~ (tree.isRoot ? '' : '/') ~ node.name %}
-                <li class="{{ odd ? 'odd' : 'even' }}"><a class="icon blob" href="{{ path(subtreeRoute, {'ref': ref, 'treeish_path': full_path }) }}">{{ node.name }}</a></li>
+                <li class="{{ odd ? 'odd' : 'even' }}">
+                    <a class="icon blob" href="{{ path(subtreeRoute, {'ref': ref, 'treeish_path': full_path }) }}">
+                        {{ node.name }}<span>{{ repository.getLog(node, active_branch).sha }} ({{ repository.getLog(node, active_branch).message }})</span>
+                    </a>
+                </li>
             {% endif %}
             {% set odd = not odd %}
         {% else %}
