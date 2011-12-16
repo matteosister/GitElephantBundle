@@ -1,5 +1,5 @@
 <section class="tree">
-    <table class="tree">
+    <table class="tree" width="600">
         {% set odd = true %}
         {% if not tree.root and not tree.blob %}
             {% set odd = false %}
@@ -45,7 +45,7 @@
         {% else %}
             {% if tree.blob %}
                 <td class="content">
-                    <pre class="brush: {{ tree.blob.getExtension(repository.path) }}">
+                    <pre class="brush: {{ tree.blob.getExtension(repository.path) is null ? 'text' : tree.blob.getExtension(repository.path) }}">
                         {%for line in repository.outputContent(tree.blob, active_branch) %}
                             {{ line }}
                         {% else %}{% spaceless %}

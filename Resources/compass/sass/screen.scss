@@ -173,6 +173,7 @@ section.content {
 section.tree {
     @include white-box;
     @include single-box-shadow;
+    overflow: auto;
     table.tree {
         width: 100%;
     }
