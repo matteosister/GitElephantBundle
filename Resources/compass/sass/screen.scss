@@ -173,10 +173,16 @@ section.content {
 section.tree {
     @include white-box;
     @include single-box-shadow;
-    li {
+    table.tree {
+        width: 100%;
+    }
+    tr {
         &.even {
             background-color: $bg-color;
         }
+    }
+    td {
+        padding: 3px 2px;
     }
     a {
         font-size: 1.3em;

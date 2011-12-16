@@ -6,6 +6,7 @@
 {% endblock %}
 
 {% block content %}
+    {{ parent() }}
     {% include "CypressGitElephantBundle:Repository:_breadcrumb.html.twig" %}
     {% include "CypressGitElephantBundle:Repository:_tree.html.twig" with {
         'tree':          tree,
