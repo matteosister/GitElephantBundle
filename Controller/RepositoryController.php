@@ -22,7 +22,7 @@ class RepositoryController extends Controller
         return array(
             'ref'           => $ref->getName(),
             'repository'    => $this->get('git_repository'),
-            'tree'          => $this->get('git_repository')->getTree($ref->getFullRef()),
+            'tree'          => $this->get('git_repository')->getTree($ref),
             'active_branch' => $this->get('git_repository')->getMainBranch()
         );
     }
@@ -42,7 +42,7 @@ class RepositoryController extends Controller
         return array(
             'ref'           => $branch->getName(),
             'repository'    => $this->get('git_repository'),
-            'tree'          => $this->get('git_repository')->getTree($branch->getFullRef(), $treeish_path),
+            'tree'          => $this->get('git_repository')->getTree($branch, $treeish_path),
             'active_branch' => $branch,
         );
     }

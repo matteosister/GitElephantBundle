@@ -26,7 +26,7 @@ class CommitController extends Controller
     public function showAction($ref)
     {
         $commit = $this->get('git_repository')->getCommit($ref);
-        $diff = $this->get('git_repository')->getCommitDiff($commit);
+        $diff = $this->get('git_repository')->getDiff($commit);
         return array(
             'repository'    => $this->get('git_repository'),
             'commit'        => $commit,
