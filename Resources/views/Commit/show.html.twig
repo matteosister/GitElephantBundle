@@ -13,7 +13,8 @@
                     {% for chunk in diff_object %}
                         {% for line in chunk %}
                             <tr class="{{ line.type }}">
-                                <td colspan="2"><pre>{{ line.content }}</pre></td>
+                                <td>{{ line.number }}</td>
+                                <td><pre>{{ line }}</pre></td>
                             </tr>
                         {% endfor %}
                         {% if loop.index < loop.length %}
