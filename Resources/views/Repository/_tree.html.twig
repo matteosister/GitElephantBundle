@@ -6,16 +6,16 @@
             {% set first_row = true %}
             <tr>
                 <td class="odd" colspan="2">
-                    <a class="icon tree" href="{{ path(subtreeRoute, {'ref': active_branch.name, 'treeish_path': tree.parent }) }}">&hellip;</a>
+                    <a class="icon tree" href="{{ path(subtreeRoute, {'reference': active_branch.name ~ '/' ~ tree.parent }) }}">&hellip;</a>
                 </td>
             </tr>
         {% endif %}
         {% for node in tree %}
             <tr class="{{ odd ? 'odd' : 'even' }}">
             {% if node.tree %}
-                {% set full_path = app.request.get('treeish_path') ~ (tree.isRoot ? '' : '/') ~ node.name %}
+                {% set full_path = active_path ~ (tree.isRoot ? '' : '/') ~ node.name %}
                 <td>
-                    <a class="icon tree" href="{{ path(subtreeRoute, {'ref': ref, 'treeish_path': full_path}) }}">
+                    <a class="icon tree" href="{{ path(subtreeRoute, {'reference': ref ~ '/' ~ full_path}) }}">
                         {{ node.name }}
                     </a>
                 </td>
@@ -31,7 +31,7 @@
             {% else %}
                 {% set full_path = app.request.get('treeish_path') ~ (tree.isRoot ? '' : '/') ~ node.name %}
                 <td>
-                    <a class="icon blob" href="{{ path(subtreeRoute, {'ref': ref, 'treeish_path': full_path }) }}">
+                    <a class="icon blob" href="{{ path(subtreeRoute, {'reference': ref ~ '/' ~ full_path }) }}">
                         {{ node.name }}
                     </a>
                 </td>

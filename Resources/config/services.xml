@@ -7,6 +7,7 @@
     <parameters>
         <parameter key="cypress_git_elephant.binary.class">GitElephant\GitBinary</parameter>
         <parameter key="cypress_git_elephant.repository.class">GitElephant\Repository</parameter>
+        <parameter key="cypress_git_elephant.repository.utilities.class">Cypress\GitElephantBundle\Util\RepositoryUtilities</parameter>
     </parameters>
 
     <services>
@@ -21,7 +22,11 @@
             <argument>%cypress_git_elephant.repository_path%</argument>
             <argument type="service" id="cypress_git_elephant.git_binary" />
         </service>
-
         <service id="git_repository" alias="cypress_git_elephant.repository" />
+
+        <service id="cypress_git_elephant.repository.utilities" class="%cypress_git_elephant.repository.utilities.class%">
+            <argument type="service" id="cypress_git_elephant.repository" />
+        </service>
+        <service id="git_repository.utilities" alias="cypress_git_elephant.repository.utilities" />
     </services>
 </container>

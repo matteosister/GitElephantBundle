@@ -1,10 +1,10 @@
 <ul class="breadcrumb">
     <li class="house">
-        <a class="icon house" href="{{ path('repository_tree', {'ref': active_branch.name, 'treeish_path': '' }) }}"></a>
+        <a class="icon house" href="{{ path('repository_tree', {'reference': active_branch.name }) }}"></a>
     </li>
     {% for bc in tree.breadcrumb %}
         <li{{ loop.last and tree.blob is null ? ' class="last"' : '' }}>
-            <a class="icon tree" href="{{ path('repository_tree', {'ref': ref, 'treeish_path': bc.path }) }}">
+            <a class="icon tree" href="{{ path('repository_tree', {'reference': ref ~ '/' ~ bc.path }) }}">
                 {{ bc.label }}
             </a>
         </li>

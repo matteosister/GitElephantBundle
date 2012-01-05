@@ -28,7 +28,7 @@ class RepositoryController extends Controller
     }
 
     /**
-     * @Route("/tree/{ref}/{treeish_path}", name="repository_tree", requirements={"treeish_path" = ".+"})
+     * @Route("/tree/{reference}", name="repository_tree", requirements={"reference" = ".+"})
      * @Template()
      *
      * @param \Symfony\Component\HttpFoundation\Request $request
@@ -36,14 +36,17 @@ class RepositoryController extends Controller
      * @param $treeish_path the relative path to the content
      * @return array
      */
-    public function treeAction(Request $request, $ref, $treeish_path)
+    public function treeAction(Request $request, $reference)
     {
-        $branch = $this->get('git_repository')->getBranch($ref);
+        $utils = $this->get('git_repository.utilities');
+        $utils->setReference($reference);
+        $branch = $this->get('git_repository')->getBranch($utils->getRef());
         return array(
             'ref'           => $branch->getName(),
             'repository'    => $this->get('git_repository'),
-            'tree'          => $this->get('git_repository')->getTree($branch, $treeish_path),
+            'tree'          => $this->get('git_repository')->getTree($branch, $utils->getPath()),
             'active_branch' => $branch,
+            'active_path'          => $utils->getPath()
         );
     }
 }
