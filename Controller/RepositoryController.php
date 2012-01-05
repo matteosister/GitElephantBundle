@@ -23,7 +23,8 @@ class RepositoryController extends Controller
             'ref'           => $ref->getName(),
             'repository'    => $this->get('git_repository'),
             'tree'          => $this->get('git_repository')->getTree($ref),
-            'active_branch' => $this->get('git_repository')->getMainBranch()
+            'active_branch' => $this->get('git_repository')->getMainBranch(),
+            'active_path'   => ''
         );
     }
 
@@ -41,6 +42,10 @@ class RepositoryController extends Controller
         $utils = $this->get('git_repository.utilities');
         $utils->setReference($reference);
         $branch = $this->get('git_repository')->getBranch($utils->getRef());
+        $tree = $this->get('git_repository')->getTree($branch, $utils->getPath());
+        if ($this->get('git_repository')->getMainBranch() == $branch && $tree->isRoot() && !$tree->isBlob()) {
+            return $this->redirect($this->generateUrl('repository_root'));
+        }
         return array(
             'ref'           => $branch->getName(),
             'repository'    => $this->get('git_repository'),
