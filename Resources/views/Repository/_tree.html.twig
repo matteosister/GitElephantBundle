@@ -29,7 +29,7 @@
                     <a class="icon link" href="#">{{ node.name }} ({{ node.sha }})</a>
                 </td>
             {% else %}
-                {% set full_path = app.request.get('treeish_path') ~ (tree.isRoot ? '' : '/') ~ node.name %}
+                {% set full_path = active_path ~ (tree.isRoot ? '' : '/') ~ node.name %}
                 <td>
                     <a class="icon blob" href="{{ path(subtreeRoute, {'reference': ref ~ '/' ~ full_path }) }}">
                         {{ node.name }}
