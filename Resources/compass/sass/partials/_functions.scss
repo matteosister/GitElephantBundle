@@ -1,9 +1,0 @@
-@mixin white-box($padding: 0.5em)
-{
-    @include border-radius($border-radius);
-    @include single-box-shadow;
-    padding: $padding;
-    background-color: #FFF;
-    border: 1px solid $border-color;
-}
-
