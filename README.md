@@ -21,6 +21,7 @@ How to install
 - register the two namespaces in the autoload.php file
 
 *app/autoload.php*
+
 ``` php
 $loader->registerNamespaces(array(
     // ...other namespaces
@@ -32,6 +33,7 @@ $loader->registerNamespaces(array(
 - register the bundle in the kernel file
 
 *app/AppKernel.php*
+
 ``` php
 class AppKernel extends Kernel
 {
