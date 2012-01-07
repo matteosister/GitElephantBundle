@@ -10,40 +10,46 @@ How to install
 - Add the GitElephant library and the bundle itself in the deps file
 
 
-        [GitElephant]
-            git=git://github.com/matteosister/GitElephant.git
-            target=git-elephant
+    [GitElephant]
+        git=git://github.com/matteosister/GitElephant.git
+        target=git-elephant
 
-        [GitElephantBundle]
-            git=git://github.com/matteosister/GitElephantBundle.git
-            target=/bundles/Cypress/GitElephantBundle
+    [GitElephantBundle]
+        git=git://github.com/matteosister/GitElephantBundle.git
+        target=/bundles/Cypress/GitElephantBundle
 
 - register the two namespaces in the autoload.php file
 
 *app/autoload.php*
 
-    $loader->registerNamespaces(array(
-        // ...other namespaces
-        'GitElephant'      => __DIR__.'/../vendor/git-elephant/src',
-        'Cypress'          => __DIR__.'/../vendor/bundles',
-    ));
+``` php
+<?php
+$loader->registerNamespaces(array(
+    // ...other namespaces
+    'GitElephant'      => __DIR__.'/../vendor/git-elephant/src',
+    'Cypress'          => __DIR__.'/../vendor/bundles',
+));
+```
 
 - register the bundle in the kernel file
 
 *app/AppKernel.php*
 
-    class AppKernel extends Kernel
+``` php
+<?php
+class AppKernel extends Kernel
+{
+    public function registerBundles()
     {
-        public function registerBundles()
-        {
-            $bundles = array(
-                // ...other bundles
-                new Cypress\GitElephantBundle\CypressGitElephantBundle(),
-            );
+        $bundles = array(
             // ...other bundles
-            return $bundles;
-        }
+            new Cypress\GitElephantBundle\CypressGitElephantBundle(),
+        );
+        // ...other bundles
+        return $bundles;
     }
+}
+```
 
 **Method 2 - submodules**
 
