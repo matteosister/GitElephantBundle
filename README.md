@@ -10,13 +10,13 @@ How to install
 - Add the GitElephant library and the bundle itself in the deps file
 
 
-    [GitElephant]
-        git=git://github.com/matteosister/GitElephant.git
-        target=git-elephant
+        [GitElephant]
+            git=git://github.com/matteosister/GitElephant.git
+            target=git-elephant
 
-    [GitElephantBundle]
-        git=git://github.com/matteosister/GitElephantBundle.git
-        target=/bundles/Cypress/GitElephantBundle
+        [GitElephantBundle]
+            git=git://github.com/matteosister/GitElephantBundle.git
+            target=/bundles/Cypress/GitElephantBundle
 
 - register the two namespaces in the autoload.php file
 
@@ -32,20 +32,18 @@ How to install
 
 *app/AppKernel.php*
 
-``` php
-class AppKernel extends Kernel
-{
-    public function registerBundles()
+    class AppKernel extends Kernel
     {
-        $bundles = array(
+        public function registerBundles()
+        {
+            $bundles = array(
+                // ...other bundles
+                new Cypress\GitElephantBundle\CypressGitElephantBundle(),
+            );
             // ...other bundles
-            new Cypress\GitElephantBundle\CypressGitElephantBundle(),
-        );
-        // ...other bundles
-        return $bundles;
+            return $bundles;
+        }
     }
-}
-```
 
 **Method 2 - submodules**
 
