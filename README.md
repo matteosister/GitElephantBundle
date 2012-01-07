@@ -22,29 +22,29 @@ How to install
 
 *app/autoload.php*
 ``` php
-    $loader->registerNamespaces(array(
-        // ...other namespaces
-        'GitElephant'      => __DIR__.'/../vendor/git-elephant/src',
-        'Cypress'          => __DIR__.'/../vendor/bundles',
-    ));
+$loader->registerNamespaces(array(
+    // ...other namespaces
+    'GitElephant'      => __DIR__.'/../vendor/git-elephant/src',
+    'Cypress'          => __DIR__.'/../vendor/bundles',
+));
 ```
 
 - register the bundle in the kernel file
 
 *app/AppKernel.php*
 ``` php
-    class AppKernel extends Kernel
+class AppKernel extends Kernel
+{
+    public function registerBundles()
     {
-        public function registerBundles()
-        {
-            $bundles = array(
-                // ...other bundles
-                new Cypress\GitElephantBundle\CypressGitElephantBundle(),
-            );
+        $bundles = array(
             // ...other bundles
-            return $bundles;
-        }
+            new Cypress\GitElephantBundle\CypressGitElephantBundle(),
+        );
+        // ...other bundles
+        return $bundles;
     }
+}
 ```
 
 **Method 2 - submodules**
