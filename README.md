@@ -59,8 +59,8 @@ class AppKernel extends Kernel
 You can also manage the two git repositories with git and submodules. It could be a mess if you don't know what you do, but I personally prefer this way
 
 ``` bash
-$ git submodule add git://github.com/matteosister/GitElephant.git src
-$ git submodule add git://github.com/matteosister/GitElephantBundle.git src
+$ git submodule add git://github.com/matteosister/GitElephant.git src/git-elephant
+$ git submodule add git://github.com/matteosister/GitElephantBundle.git src/Cypress/GitElephantBundle
 ```
 
 This two commands will clone the two repositories inside your "src" folder. You can use any folder you want in your symfony project. Just remember to update the *app/autoload.php* file and to activate the bundle in *app/AppKernel.php*
