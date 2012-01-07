@@ -11,14 +11,15 @@ How to install
 
 - Add the GitElephant library and the bundle itself in the deps file
 
+*deps*
 
-        [GitElephant]
-            git=git://github.com/matteosister/GitElephant.git
-            target=git-elephant
+    [GitElephant]
+        git=git://github.com/matteosister/GitElephant.git
+        target=git-elephant
 
-        [GitElephantBundle]
-            git=git://github.com/matteosister/GitElephantBundle.git
-            target=/bundles/Cypress/GitElephantBundle
+    [GitElephantBundle]
+        git=git://github.com/matteosister/GitElephantBundle.git
+        target=/bundles/Cypress/GitElephantBundle
 
 - register the two namespaces in the autoload.php file
 
