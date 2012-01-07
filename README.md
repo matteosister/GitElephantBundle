@@ -2,7 +2,7 @@
 
 This is a simple bundle to use the [GitElephant library](https://github.com/matteosister/GitElephant) in a Symfony2 project
 
-Watch a [simple live example](http://gitelephant.cypresslab.net.158.69-195-222.groveurl.com/) of what you can do with GitElephant, [GitElephantBundle](https://github.com/matteosister/GitElephantBundle), Symfony2 and a git repository...
+Watch a [simple live example](http://gitelephant.cypresslab.net.158.69-195-222.groveurl.com/) of what you can do with [GitElephant](https://github.com/matteosister/GitElephant), GitElephantBundle, Symfony2 and a git repository...
 
 How to install
 --------------
