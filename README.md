@@ -90,6 +90,7 @@ To use the bundle you have to define two parameters in you *app/config/config.ym
 Now, inside your controllers, you can easily access the GitElephant library with dependency injection:
 
 ``` php
+<?php
 class AwesomeController extends Controller
 {
     /**
