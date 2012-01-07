@@ -86,7 +86,9 @@ To use the bundle you have to define two parameters in you *app/config/config.ym
         repository_path: /home/matteo/repo-test
         binary_path: /usr/local/bin/git
 
-**repository_path**: (required) is the path on your filesystem where you have your git repository (also a bare one)
+**repository_path**: (required) is the path on your filesystem where you have your git repository
+
+The git repository could also be a bare repository (useful for web servers). But without a checked out copy you won't be able to modify the repository state.
 
 **binary_path**: (optional) is the path to your git executable. If you don't provide this GItElephant try to argue the right executable with "which git". Remember that this lib only works on *nix filesystems.
 
