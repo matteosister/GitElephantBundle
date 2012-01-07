@@ -22,13 +22,11 @@ How to install
 
 *app/autoload.php*
 
-``` php
-$loader->registerNamespaces(array(
-    // ...other namespaces
-    'GitElephant'      => __DIR__.'/../vendor/git-elephant/src',
-    'Cypress'          => __DIR__.'/../vendor/bundles',
-));
-```
+    $loader->registerNamespaces(array(
+        // ...other namespaces
+        'GitElephant'      => __DIR__.'/../vendor/git-elephant/src',
+        'Cypress'          => __DIR__.'/../vendor/bundles',
+    ));
 
 - register the bundle in the kernel file
 
