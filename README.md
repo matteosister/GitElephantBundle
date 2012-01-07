@@ -80,7 +80,7 @@ For more info about git submodules read the [dedicated section](http://progit.or
 How to use
 ----------
 
-To use the bundle you have to define two parameters in you *app/config/config.yml file*
+To use the bundle you have to define two parameters in you *app/config/config.yml* file under *cypress_git_elephant* section
 
     cypress_git_elephant:
         repository_path: /home/matteo/repo-test
