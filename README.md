@@ -115,6 +115,8 @@ class AwesomeController extends Controller
 }
 ```
 
+Read the documentation of [GitElephant](https://github.com/matteosister/GitElephant) to know what you can do with the *Repository* class
+
 Example
 -------
 
