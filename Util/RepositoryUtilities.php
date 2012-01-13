@@ -36,15 +36,27 @@ class RepositoryUtilities
             return;
         }
 
+        if ($this->repository->getTag($reference) !== null) {
+            $this->ref = $reference;
+            $this->path = '';
+            return;
+        }
+
         $slices = explode('/', $reference);
         $test = '';
         for ($i = 0; $i < count($slices); $i++) {
             $test .= $slices[$i];
             $branch = $this->repository->getBranch($test);
+            $tag = $this->repository->getTag($test);
             $test .= '/';
             if ($branch !== null) {
                 $this->ref = $branch->getName();
                 $this->path = ltrim(str_replace($branch->getName(), '', $reference), '/');
+                break;
+            }
+            if ($tag !== null) {
+                $this->ref = $tag->getName();
+                $this->path = ltrim(str_replace($tag->getName(), '', $reference), '/');
                 break;
             }
         }
