@@ -6,6 +6,9 @@ Watch a [simple live example](http://gitelephant.cypresslab.net/) of what you ca
 
 [Download the demo bundle code](https://github.com/matteosister/GitElephantDemoBundle) used in the live example
 
+![GitElephantBundle wdt](https://github.com/matteosister/GitElephantBundle/raw/master/Resources/public/images/preview.png)
+
+
 How to install
 --------------
 
@@ -87,6 +90,15 @@ To use the bundle you have to define two parameters in you *app/config/config.ym
     cypress_git_elephant:
         repository_path: /home/matteo/repo-test
         binary_path: /usr/local/bin/git
+
+As a bonus, thanks to the GitElephant library, you can have the branch of any repository right inside yuou Symfony2 toolbar.
+
+Add this to your test configuration file *app/config/config_dev.yml*
+
+    cypress_git_elephant:
+        profiler_repository_path: "%kernel.root_dir%/../"
+
+If you use git with Symfony2, with the above configuration, you can see directly from the browser the branch you are in.
 
 **repository_path**: (required) is the path on your filesystem where you have your git repository
 
