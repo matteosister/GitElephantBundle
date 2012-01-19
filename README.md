@@ -93,7 +93,7 @@ To use the bundle you have to define two parameters in you *app/config/config.ym
 
 As a bonus, thanks to the GitElephant library, you can have the branch of any repository right inside yuou Symfony2 toolbar.
 
-Add this to your test configuration file *app/config/config_dev.yml*
+Add this to your **dev** configuration file *app/config/config_dev.yml*
 
     cypress_git_elephant:
         profiler_repository_path: "%kernel.root_dir%/../"
