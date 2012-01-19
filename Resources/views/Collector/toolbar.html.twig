@@ -1,14 +1,15 @@
 {% extends 'WebProfilerBundle:Profiler:layout.html.twig' %}
 
 {% block toolbar %}
-    {# the web debug toolbar content #}
-    {% set icon %}
-        <img width="11" height="28" alt="Timers" style="vertical-align: middle; margin-right: 5px;" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAsAAAAcCAQAAAAddo2OAAAAAmJLR0QA/4ePzL8AAAAJcEhZcwAACxMAAAsTAQCanBgAAAAHdElNRQfcARMVFg43KV5+AAAAsUlEQVQoz82RQQ7BUBCGv3meBF1JLIQQWzaWLtODOICNe9RJHMLWCVpNpDxSvwUN7V5iNpP8mXzzZQb+pWzeZo2rZeVhY/OIjHYtDoeOA3yD4MHrbts6ROWPvV8t7mtvPXJWyY0vuZbNiJRWY5VajgDtwhsSRzpbg5yYA+6NNIBHFHhMXTPJLogbuKSwMUMWFGAnTRlq8hEccCQi1ei1tBIUV1qEryMCkLGUs8cu/P7zTw7vNhzx82EeAAAAAElFTkSuQmCC"/>
-    {% endset %}
-    {% set text %}
-        {{ collector.branch }}
-    {% endset %}
-    {% include 'WebProfilerBundle:Profiler:toolbar_item.html.twig' with { 'link': false } %}
+    {% if collector.enabled %}
+        {% set icon %}
+            <img width="11" height="28" alt="Timers" style="vertical-align: middle; margin-right: 5px;" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAsAAAAcCAQAAAAddo2OAAAAAmJLR0QA/4ePzL8AAAAJcEhZcwAACxMAAAsTAQCanBgAAAAHdElNRQfcARMVFg43KV5+AAAAsUlEQVQoz82RQQ7BUBCGv3meBF1JLIQQWzaWLtODOICNe9RJHMLWCVpNpDxSvwUN7V5iNpP8mXzzZQb+pWzeZo2rZeVhY/OIjHYtDoeOA3yD4MHrbts6ROWPvV8t7mtvPXJWyY0vuZbNiJRWY5VajgDtwhsSRzpbg5yYA+6NNIBHFHhMXTPJLogbuKSwMUMWFGAnTRlq8hEccCQi1ei1tBIUV1qEryMCkLGUs8cu/P7zTw7vNhzx82EeAAAAAElFTkSuQmCC"/>
+        {% endset %}
+        {% set text %}
+            {{ collector.branch }}
+        {% endset %}
+        {% include 'WebProfilerBundle:Profiler:toolbar_item.html.twig' with { 'link': false } %}
+    {% endif %}
 {% endblock %}
 
 {% block head %}

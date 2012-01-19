@@ -17,22 +17,34 @@ use GitElephant\Repository;
 class GitElephantDataCollector extends DataCollector
 {
     private $repository;
+    private $enabled;
 
-    public function __construct(Repository $repository)
+    public function __construct($path)
     {
-        $this->repository = $repository;
+        if ($path == false) {
+            $this->enabled = false;
+        } else {
+            $this->enabled = true;
+            $this->repository = new Repository($path);
+        }
     }
 
     public function collect(Request $request, Response $response, \Exception $exception = null)
     {
         $this->data = array(
-            'branch' => $this->repository->getMainBranch()->getName(),
+            'branch' => $this->repository !== null ? $this->repository->getMainBranch()->getName() : null,
+            'enabled' => $this->enabled
         );
     }
 
     public function getBranch()
     {
         return $this->data['branch'];
+    }
+
+    public function getEnabled()
+    {
+        return $this->data['enabled'];
     }
 
     public function getName()

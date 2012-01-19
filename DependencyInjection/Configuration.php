@@ -24,7 +24,7 @@ class Configuration implements ConfigurationInterface
             ->children()
                 ->scalarNode('repository_path')->isRequired()->end()
                 ->scalarNode('binary_path')->defaultValue('/usr/bin/git')->end()
-                ->scalarNode('profiler_repository_path')->defaultValue('%kernel.root_dir%/../')->end()
+                ->scalarNode('profiler_repository_path')->defaultValue(false)->end()
             ->end()
         ;
 
