@@ -24,6 +24,7 @@ class CypressGitElephantExtension extends Extension
 
         $container->setParameter('cypress_git_elephant.repository_path', $config['repository_path']);
         $container->setParameter('cypress_git_elephant.binary_path', $config['binary_path']);
+        $container->setParameter('cypress_git_elephant.profiler_repository_path', $config['profiler_repository_path']);
 
         $loader = new Loader\XmlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('services.xml');

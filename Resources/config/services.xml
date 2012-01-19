@@ -24,9 +24,20 @@
         </service>
         <service id="git_repository" alias="cypress_git_elephant.repository" />
 
+        <service id="cypress_git_elephant.profiler_repository"
+                class="%cypress_git_elephant.repository.class%">
+            <argument>%cypress_git_elephant.profiler_repository_path%</argument>
+            <argument type="service" id="cypress_git_elephant.git_binary" />
+        </service>
+
         <service id="cypress_git_elephant.repository.utilities" class="%cypress_git_elephant.repository.utilities.class%">
             <argument type="service" id="cypress_git_elephant.repository" />
         </service>
         <service id="git_repository.utilities" alias="cypress_git_elephant.repository.utilities" />
+        
+        <service id="data_collector.git_data_collector" class="Cypress\GitElephantBundle\Collector\GitElephantDataCollector">
+            <argument type="service" id="cypress_git_elephant.profiler_repository" />
+            <tag name="data_collector" template="CypressGitElephantBundle:Collector:toolbar.html.twig" id="git_elephant" />
+        </service>
     </services>
 </container>
