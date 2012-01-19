@@ -6,7 +6,7 @@ Watch a [simple live example](http://gitelephant.cypresslab.net/) of what you ca
 
 [Download the demo bundle code](https://github.com/matteosister/GitElephantDemoBundle) used in the live example
 
-![GitElephantBundle wdt](https://github.com/matteosister/GitElephantBundle/raw/master/Resources/public/images/preview.png)
+![GitElephantBundle wdt](https://github.com/matteosister/GitElephantBundle/blob/master/preview.png)
 
 
 How to install
