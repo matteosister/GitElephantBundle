@@ -17,7 +17,7 @@ class RepositoryUtilities
     private $ref;
     private $path;
 
-    public function __construct(Repository $repository)
+    public function setRepository(Repository $repository)
     {
         $this->repository = $repository;
     }
