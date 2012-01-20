@@ -1,25 +1,36 @@
 {% extends 'WebProfilerBundle:Profiler:layout.html.twig' %}
 
 {% block toolbar %}
+    {% set branch = collector.repository.mainBranch %}
     {% if collector.enabled %}
         {% set icon %}
             <img width="11" height="28" alt="Timers" style="vertical-align: middle; margin-right: 5px;" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAsAAAAcCAQAAAAddo2OAAAAAmJLR0QA/4ePzL8AAAAJcEhZcwAACxMAAAsTAQCanBgAAAAHdElNRQfcARMVFg43KV5+AAAAsUlEQVQoz82RQQ7BUBCGv3meBF1JLIQQWzaWLtODOICNe9RJHMLWCVpNpDxSvwUN7V5iNpP8mXzzZQb+pWzeZo2rZeVhY/OIjHYtDoeOA3yD4MHrbts6ROWPvV8t7mtvPXJWyY0vuZbNiJRWY5VajgDtwhsSRzpbg5yYA+6NNIBHFHhMXTPJLogbuKSwMUMWFGAnTRlq8hEccCQi1ei1tBIUV1qEryMCkLGUs8cu/P7zTw7vNhzx82EeAAAAAElFTkSuQmCC"/>
         {% endset %}
         {% set text %}
-            {{ collector.branch }}
+            {{ branch.name }}
         {% endset %}
-        {% include 'WebProfilerBundle:Profiler:toolbar_item.html.twig' with { 'link': false } %}
+        {% include 'WebProfilerBundle:Profiler:toolbar_item.html.twig' with { 'link': true } %}
     {% endif %}
 {% endblock %}
 
-{% block head %}
-    {# if the web profiler panel needs some specific JS or CSS files #}
-{% endblock %}
 
 {% block menu %}
-    {# the menu content #}
+<span class="label">
+    <span class="icon"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAsAAAAcCAQAAAAddo2OAAAAAmJLR0QA/4ePzL8AAAAJcEhZcwAACxMAAAsTAQCanBgAAAAHdElNRQfcARMVFg43KV5+AAAAsUlEQVQoz82RQQ7BUBCGv3meBF1JLIQQWzaWLtODOICNe9RJHMLWCVpNpDxSvwUN7V5iNpP8mXzzZQb+pWzeZo2rZeVhY/OIjHYtDoeOA3yD4MHrbts6ROWPvV8t7mtvPXJWyY0vuZbNiJRWY5VajgDtwhsSRzpbg5yYA+6NNIBHFHhMXTPJLogbuKSwMUMWFGAnTRlq8hEccCQi1ei1tBIUV1qEryMCkLGUs8cu/P7zTw7vNhzx82EeAAAAAElFTkSuQmCC" alt="GitElephant" /></span>
+    <strong>git</strong>
+</span>
 {% endblock %}
 
 {% block panel %}
-    {# the panel content #}
+    {% set repo = collector.repository %}
+    {% set number = 10 %}
+    <h2>Last {{ number }} Commits for <em>{{ repo.mainBranch.name }}</em> branch</h2>
+    <ul class="alt">
+        {% for commit in repo.log(repo.mainBranch, null, 15) %}
+        <li class="{{ cycle(['odd', 'even'], loop.index) }}" style="padding: 5px 0; overflow: hidden">
+            <h2>{{ commit.message }}</h2>
+            {{ commit.sha }} by <strong>{{ commit.author.name }}</strong>
+        </li>
+        {% endfor %}
+    </ul>
 {% endblock %}

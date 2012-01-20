@@ -32,14 +32,14 @@ class GitElephantDataCollector extends DataCollector
     public function collect(Request $request, Response $response, \Exception $exception = null)
     {
         $this->data = array(
-            'branch' => $this->repository !== null ? $this->repository->getMainBranch()->getName() : null,
+            'repository' => $this->repository !== null ? $this->repository : null,
             'enabled' => $this->enabled
         );
     }
 
-    public function getBranch()
+    public function getRepository()
     {
-        return $this->data['branch'];
+        return $this->data['repository'];
     }
 
     public function getEnabled()
