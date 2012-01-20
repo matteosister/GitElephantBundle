@@ -91,15 +91,6 @@ To use the bundle you have to define two parameters in you *app/config/config.ym
         repository_path: /home/matteo/repo-test
         binary_path: /usr/local/bin/git
 
-As a bonus, thanks to the GitElephant library, you can have the branch of any repository right inside yuou Symfony2 toolbar.
-
-Add this to your **dev** configuration file *app/config/config_dev.yml*
-
-    cypress_git_elephant:
-        profiler_repository_path: "%kernel.root_dir%/../"
-
-If you use git with Symfony2, with the above configuration, you can see directly from the browser the branch you are in.
-
 **repository_path**: (required) is the path on your filesystem where you have your git repository
 
 The git repository could also be a bare repository (useful for web servers). But without a checked out copy you won't be able to modify the repository state. You will be able to show the repository, but not, for example, create a new commit
@@ -130,6 +121,18 @@ class AwesomeController extends Controller
 ```
 
 Read the documentation of [GitElephant](https://github.com/matteosister/GitElephant) to know what you can do with the *Repository* class
+
+Wedb Debug Toolbar
+------------------
+
+As a bonus, thanks to the GitElephant library, you can have the branch of any repository right inside yuor Symfony2 toolbar.
+
+Add this to your **dev** configuration file *app/config/config_dev.yml*
+
+    cypress_git_elephant:
+        profiler_repository_path: "%kernel.root_dir%/../"
+
+If you use git with Symfony2, with the above configuration, you can see directly from the browser the branch you are in.
 
 Example
 -------
