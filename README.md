@@ -133,7 +133,7 @@ class AwesomeController extends Controller
 
 Read the documentation of [GitElephant](https://github.com/matteosister/GitElephant) to know what you can do with the *Repository* class, or [watch the demo site](http://gitelephant.cypresslab.net/) build with this bundle, and [the relative code](https://github.com/matteosister/GitElephantDemoBundle).
 
-Wedb Debug Toolbar
+Web Debug Toolbar
 ------------------
 
 As a bonus, thanks to the GitElephant library, you can have the branch of any repository right inside yuor Symfony2 toolbar.
