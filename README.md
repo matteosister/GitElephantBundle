@@ -88,16 +88,19 @@ How to use
 To use the bundle you have to define two parameters in you *app/config/config.yml* file under *cypress_git_elephant* section
 
     cypress_git_elephant:
-        repository_path: /home/matteo/repo-test
         binary_path: /usr/local/bin/git
-
-**repository_path**: (required) is the path on your filesystem where you have your git repository
-
-The git repository could also be a bare repository (useful for web servers). But without a checked out copy you won't be able to modify the repository state. You will be able to show the repository, but not, for example, create a new commit
+        repositories:
+            "GitElephant": "/home/matteo/libraries/GitElephant"
+            "Bootstrap": "/home/matteo/libraries/Bootstrap"
+            # ... other repositories
 
 **binary_path**: (optional) is the path to your git executable. If you don't provide this GItElephant try to argue the right executable with "which git". Remember that this lib only works on *nix filesystems.
 
 Now, inside your controllers, you can easily access the GitElephant library with dependency injection:
+
+**repositories**: (at least one is required) is an hash with *key*: a repository name, *value*: the repository path
+
+The repository path could also be a bare repository (useful for web servers). But without a checked out copy you won't be able to modify the repository state. You will be able to show the repository, but not, for example, create a new commit
 
 ``` php
 <?php
@@ -113,14 +116,22 @@ class AwesomeController extends Controller
     public function rootAction(Request $request)
     {
         // Repository instance
-        $repo = $this->get('cypress_git_elephant.repository');
+        $repositories = $this->get('cypress_git_elephant.repository_collection');
         // There is also an handy alias
-        $repo = $this->get('git_repository');
+        $repositories = $this->get('git_repositories');
+        // $repositories is an instance of GitElephant\Cypress\GitElephantBundle\Collection\GitElephantRepositoryCollection
+        // it has the Countable, ArrayAccess and Iterator interfaces. So you can do:
+        $num_repos = count($repositories); //number of repositories
+        $git_elephant = $repositories->get('GitElephant'); // retrieve a Repository instance by its name (defined in config.yml)
+        // iterate
+        foreach ($repositories as $repo) {
+            $repo->getLog();
+        }
     }
 }
 ```
 
-Read the documentation of [GitElephant](https://github.com/matteosister/GitElephant) to know what you can do with the *Repository* class
+Read the documentation of [GitElephant](https://github.com/matteosister/GitElephant) to know what you can do with the *Repository* class, or [watch the demo site](http://gitelephant.cypresslab.net/) build with this bundle, and [the relative code](https://github.com/matteosister/GitElephantDemoBundle).
 
 Wedb Debug Toolbar
 ------------------

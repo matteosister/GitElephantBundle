@@ -22,7 +22,7 @@ class CypressGitElephantExtension extends Extension
         $configuration = new Configuration();
         $config = $this->processConfiguration($configuration, $configs);
 
-        $container->setParameter('cypress_git_elephant.repository_path', $config['repository_path']);
+        $container->setParameter('cypress_git_elephant.repositories', $config['repositories']);
         $container->setParameter('cypress_git_elephant.binary_path', $config['binary_path']);
         $container->setParameter('cypress_git_elephant.profiler_repository_path', $config['profiler_repository_path']);
 

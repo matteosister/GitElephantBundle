@@ -22,9 +22,18 @@ class Configuration implements ConfigurationInterface
 
         $rootNode
             ->children()
-                ->scalarNode('repository_path')->isRequired()->end()
-                ->scalarNode('binary_path')->defaultValue('/usr/bin/git')->end()
-                ->scalarNode('profiler_repository_path')->defaultValue(false)->end()
+                ->scalarNode('binary_path')
+                    ->defaultValue('/usr/bin/git')
+                ->end()
+                ->scalarNode('profiler_repository_path')
+                    ->defaultValue(false)
+                ->end()
+                ->arrayNode('repositories')
+                    ->requiresAtLeastOneElement()
+                    ->useAttributeAsKey('name')
+                    ->prototype('variable')->end()
+                    ->end()
+                ->end()
             ->end()
         ;
 
