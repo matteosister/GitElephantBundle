@@ -141,6 +141,7 @@ As a bonus, thanks to the GitElephant library, you can have the branch of any re
 Add this to your **dev** configuration file *app/config/config_dev.yml*
 
     cypress_git_elephant:
+        enable_profiler: true
         profiler_repository_path: "%kernel.root_dir%/../"
 
 If you use git with Symfony2, with the above configuration, you can see directly from the browser the branch you are in. Click on the icon and you get a list of the last 10 commits for the branch you are in.
