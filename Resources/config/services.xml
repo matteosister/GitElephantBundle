@@ -14,7 +14,7 @@
     <services>
         <service id="cypress_git_elephant.git_binary"
                  class="%cypress_git_elephant.binary.class%"
-                 public="false">
+                 public="true">
             <argument>%cypress_git_elephant.binary_path%</argument>
         </service>
 
