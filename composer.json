@@ -3,8 +3,8 @@
     "type": "symfony-bundle",
     "description": "GitElephant bundle for Symfony2",
     "keywords": ["git"],
-    "homepage": "http://matteosister.github.com/GitElephant",
-    "version": "0.2",
+    "homepage": "https://github.com/matteosister/GitElephant",
+    "version": "0.0.2",
     "license": "GPL3",
     "authors": [
         {
@@ -14,7 +14,7 @@
     ],
     "require": {
         "php": ">=5.3.2",
-        "cypresslab/gitelephant": "0.8.*"
+        "cypresslab/gitelephant": "0.9.*"
     },
     "autoload": {
         "psr-0": { "Cypress\\GitElephantBundle": "" }
