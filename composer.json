@@ -14,7 +14,7 @@
     ],
     "require": {
         "php": ">=5.3.2",
-        "cypresslab/gitelephant": "0.9.*"
+        "cypresslab/gitelephant": "v1.0.0-beta1"
     },
     "autoload": {
         "psr-0": { "Cypress\\GitElephantBundle": "" }
