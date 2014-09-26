@@ -31,7 +31,6 @@ How to install
 *app/autoload.php*
 
 ``` php
-<?php
 $loader->registerNamespaces(array(
     // ...other namespaces
     'GitElephant'      => __DIR__.'/../vendor/git-elephant/src',
@@ -44,7 +43,6 @@ $loader->registerNamespaces(array(
 *app/AppKernel.php*
 
 ``` php
-<?php
 class AppKernel extends Kernel
 {
     public function registerBundles()
@@ -54,6 +52,27 @@ class AppKernel extends Kernel
             new Cypress\GitElephantBundle\CypressGitElephantBundle(),
         );
         // ...other bundles
+        return $bundles;
+    }
+}
+```
+
+>Is recommended to register this bundle only in development environment for safety reasons.
+
+``` php
+class AppKernel extends Kernel
+{
+    public function registerBundles()
+    {
+        $bundles = array(
+            // ...other bundles
+        );
+
+        if (in_array($this->getEnvironment(), array('dev', 'test'))) {
+            // ...other development and testing bundles
+            $bundles[] = new Cypress\GitElephantBundle\CypressGitElephantBundle();
+        }
+
         return $bundles;
     }
 }
@@ -103,7 +122,6 @@ Now, inside your controllers, you can easily access the GitElephant library with
 The repository path could also be a bare repository (useful for web servers). But without a checked out copy you won't be able to modify the repository state. You will be able to show the repository, but not, for example, create a new commit
 
 ``` php
-<?php
 class AwesomeController extends Controller
 {
     /**
