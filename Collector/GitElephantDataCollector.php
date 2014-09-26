@@ -1,11 +1,4 @@
 <?php
-/**
- * User: matteo
- * Date: 19/01/12
- * Time: 21.07
- *
- * Just for fun...
- */
 
 namespace Cypress\GitElephantBundle\Collector;
 
@@ -14,11 +7,23 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use GitElephant\Repository;
 
+/**
+ * Class GitElephantDataCollector
+ *
+ * @category Collector
+ * @package  Cypress\GitElephantBundle\Collector
+ * @author   Matteo Giachino <https://github.com/matteosister>
+ */
 class GitElephantDataCollector extends DataCollector
 {
     private $repository;
     private $enabled;
 
+    /**
+     * Constructor
+     *
+     * @param $path
+     */
     public function __construct($path)
     {
         if ($path == false) {
@@ -29,24 +34,46 @@ class GitElephantDataCollector extends DataCollector
         }
     }
 
+    /**
+     * Collect
+     *
+     * @param Request    $request
+     * @param Response   $response
+     * @param \Exception $exception
+     */
     public function collect(Request $request, Response $response, \Exception $exception = null)
     {
         $this->data = array(
             'repository' => $this->repository !== null ? $this->repository : null,
-            'enabled' => $this->enabled
+            'enabled'    => $this->enabled
         );
     }
 
+    /**
+     * Get repository
+     *
+     * @return mixed
+     */
     public function getRepository()
     {
         return $this->data['repository'];
     }
 
+    /**
+     * Get enabled
+     *
+     * @return mixed
+     */
     public function getEnabled()
     {
         return $this->data['enabled'];
     }
 
+    /**
+     * Get name
+     *
+     * @return string
+     */
     public function getName()
     {
         return 'git_elephant';
