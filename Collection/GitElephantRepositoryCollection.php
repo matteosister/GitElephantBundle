@@ -1,16 +1,16 @@
 <?php
-/**
- * User: matteo
- * Date: 20/01/12
- * Time: 21.49
- *
- * Just for fun...
- */
 
 namespace Cypress\GitElephantBundle\Collection;
 
 use GitElephant\Repository;
 
+/**
+ * Class GitElephantRepositoryCollection
+ *
+ * @category Collection
+ * @package  Cypress\GitElephantBundle\Collection
+ * @author   Matteo Giachino <https://github.com/matteosister>
+ */
 class GitElephantRepositoryCollection implements \ArrayAccess, \Iterator, \Countable
 {
     /**
@@ -33,13 +33,13 @@ class GitElephantRepositoryCollection implements \ArrayAccess, \Iterator, \Count
      * )
      *
      * @param array $repositories an array of repository classes
-     * @param null $binary
+     * @param null  $binary
      */
     public function __construct($repositories, $binary = null)
     {
-        $this->position    = 0;
+        $this->position = 0;
 
-        foreach($repositories as $name => $path) {
+        foreach ($repositories as $name => $path) {
             $repository = new Repository($path, $binary);
             $repository->setName($name);
             $this->repositories[] = $repository;
@@ -56,12 +56,12 @@ class GitElephantRepositoryCollection implements \ArrayAccess, \Iterator, \Count
     public function get($name)
     {
         /** @var Repository $repository */
-        foreach($this->repositories as $repository)
-        {
+        foreach ($this->repositories as $repository) {
             if ($repository->getName() == $name) {
                 return $repository;
             }
         }
+
         return null;
     }
 
