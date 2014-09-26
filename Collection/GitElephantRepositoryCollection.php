@@ -33,6 +33,7 @@ class GitElephantRepositoryCollection implements \ArrayAccess, \Iterator, \Count
      * )
      *
      * @param array $repositories an array of repository classes
+     * @param null $binary
      */
     public function __construct($repositories, $binary = null)
     {
@@ -50,10 +51,11 @@ class GitElephantRepositoryCollection implements \ArrayAccess, \Iterator, \Count
      *
      * @param string $name the repository name
      *
-     * @return \GitElephant\Repository $repository
+     * @return Repository $repository
      */
     public function get($name)
     {
+        /** @var Repository $repository */
         foreach($this->repositories as $repository)
         {
             if ($repository->getName() == $name) {
