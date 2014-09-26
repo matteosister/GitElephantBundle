@@ -48,9 +48,15 @@ class TagCommand extends ContainerAwareCommand
                 InputOption::VALUE_NONE,
                 'If set, the task won\'t push tag to remote repository'
             )
+            ->addOption(
+                'all',
+                null,
+                InputOption::VALUE_NONE,
+                'If set, will tag all repositories'
+            )
             ->setHelp(
                 <<<EOT
-<info>cypress:git:tag</info> command will tag your current commit and (optionally) push to remote repository.
+<info>cypress:git:tag</info> command will tag your current commit and (optionally) push to remote repository. Only apply fisrt repository, use --all option to apply all repositories.
 EOT
             );
     }
@@ -84,8 +90,14 @@ EOT
         }
 
         /** @var Repository $repository */
-        foreach ($rc as $repository) {
-            $output->writeln($repository->getName());
+        foreach ($rc as $key => $repository) {
+            if ($key == 0 || $key > 0 && $input->getOption('all')) {
+                $repository->createTag($input->getArgument('tag'), null, $input->getArgument('comment') ? $input->getArgument('comment') : null);
+                if (!$input->getOption('no-push')) {
+                    $repository->push();
+                }
+                $output->writeln('Set tag ' . $input->getArgument('tag') . ' to repository ' . $repository->getName() . (!$input->getOption('no-push') ? ' and push.' : ''));
+            }
         }
     }
 }
