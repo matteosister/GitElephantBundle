@@ -182,6 +182,17 @@ Add this to your **dev** configuration file *app/config/config_dev.yml*
 
 If you use git with Symfony2, with the above configuration, you can see directly from the browser the branch you are in. Click on the icon and you get a list of the last 10 commits for the branch you are in.
 
+Available console commands
+--------------------------
+
+**cypress:git:tag**
+
+This command is useful to tag current commit and push to remote repository.
+
+``` bash
+$ php app/console cypress:git:tag [--no-push] [--all] tag [comment]
+```
+
 Example
 -------
 
