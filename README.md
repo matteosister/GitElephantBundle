@@ -12,7 +12,7 @@ Watch a [simple live example](http://gitelephant.cypresslab.net/GitElephant) of 
 How to install
 --------------
 
-**Method 1 - deps file**
+**Method 1 - deps file (for Symfony 2.1 and below)**
 
 - Add the GitElephant library and the bundle itself in the deps file
 
@@ -26,7 +26,7 @@ How to install
         git=git://github.com/matteosister/GitElephantBundle.git
         target=/bundles/Cypress/GitElephantBundle
 
-- register the two namespaces in the autoload.php file
+- Register the two namespaces in the autoload.php file
 
 *app/autoload.php*
 
@@ -38,7 +38,25 @@ $loader->registerNamespaces(array(
 ));
 ```
 
-- register the bundle in the kernel file
+**Method 2 - composer (recommended)**
+
+- Add the following line to the `composer.json` file:
+
+``` json
+{
+    "require": {
+        "cypresslab/gitelephant-bundle": "dev-master"
+    }
+}
+```
+
+- Execute composer update command
+
+``` bash
+$ composer update
+```
+
+- Register the bundle in the kernel file
 
 *app/AppKernel.php*
 
@@ -78,7 +96,7 @@ class AppKernel extends Kernel
 }
 ```
 
-**Method 2 - submodules**
+**Method 3 - submodules**
 
 You can also manage the two git repositories with git and submodules. It could be a mess if you don't know what you do, but I personally prefer this way
 
