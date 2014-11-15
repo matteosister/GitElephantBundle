@@ -44,6 +44,12 @@ class CommitCommand extends ContainerAwareCommand
                 'If set, the task won\'t push tag to remote repository'
             )
             ->addOption(
+                'no-stage-all',
+                null,
+                InputOption::VALUE_NONE,
+                'If set, the task won\'t stage all the working tree content'
+            )
+            ->addOption(
                 'all',
                 null,
                 InputOption::VALUE_NONE,
@@ -51,7 +57,7 @@ class CommitCommand extends ContainerAwareCommand
             )
             ->setHelp(
                 <<<EOT
-<info>cypress:git:commit</info> command will commit and push to remote repository. Only apply fisrt repository, use --all option to apply all repositories. Use --no-push to commit only on your local repository.
+<info>cypress:git:commit</info> command will commit and push to remote repository. Only apply fisrt repository, use --all option to apply all repositories. Use --no-push to commit only on your local repository. Use --no-stage-all to not stage all the working tree content.
 EOT
             );
     }
@@ -87,7 +93,7 @@ EOT
         /** @var Repository $repository */
         foreach ($rc as $key => $repository) {
             if ($key == 0 || $key > 0 && $input->getOption('all')) {
-                $repository->commit($input->getArgument('message'));
+                $repository->commit($input->getArgument('message'), !$input->getOption('no-stage-all'));
                 if (!$input->getOption('no-push')) {
                     $repository->push();
                 }
