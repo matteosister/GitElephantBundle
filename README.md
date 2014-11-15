@@ -12,7 +12,7 @@ Watch a [simple live example](http://gitelephant.cypresslab.net/GitElephant) of 
 How to install
 --------------
 
-**Method 1 - deps file (for Symfony 2.1 and below)**
+**Method 1 - deps file (for Symfony 2.0)**
 
 - Add the GitElephant library and the bundle itself in the deps file
 
@@ -38,7 +38,7 @@ $loader->registerNamespaces(array(
 ));
 ```
 
-**Method 2 - composer (recommended)**
+**Method 2 - composer for Symfony 2.1 and above (recommended)**
 
 - Add the following line to the `composer.json` file:
 
