@@ -13,35 +13,30 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Helper\ProgressHelper;
 
 /**
- * Class TagCommand
+ * Class CommitCommand
  *
  * @category Command
  * @package  Cypress\GitElephantBundle\Command
  * @author   David Romaní <david@flux.cat>
  */
-class TagCommand extends ContainerAwareCommand
+class CommitCommand extends ContainerAwareCommand
 {
     /**
-     * Tag command configuration
+     * Commit command configuration
      */
     protected function configure()
     {
-        $this->setName('cypress:git:tag')
+        $this->setName('cypress:git:commit')
             ->setDefinition(
                 array(
                     new InputArgument(
-                        'tag',
+                        'message',
                         InputArgument::REQUIRED,
-                        'Tag title'
-                    ),
-                    new InputArgument(
-                        'comment',
-                        InputArgument::OPTIONAL,
-                        'Tag comment'
+                        'Commit message'
                     ),
                 )
             )
-            ->setDescription('Tag current commit and push to remote repository')
+            ->setDescription('Commit and push to remote repository')
             ->addOption(
                 'no-push',
                 null,
@@ -52,17 +47,17 @@ class TagCommand extends ContainerAwareCommand
                 'all',
                 null,
                 InputOption::VALUE_NONE,
-                'If set, will tag to all repositories'
+                'If set, will commit to all repositories'
             )
             ->setHelp(
                 <<<EOT
-<info>cypress:git:tag</info> command will tag your current commit and push to remote repository. Only apply fisrt repository, use --all option to apply all repositories. Use --no-push to tag only on your local repository.
+<info>cypress:git:commit</info> command will commit and push to remote repository. Only apply fisrt repository, use --all option to apply all repositories. Use --no-push to commit only on your local repository.
 EOT
             );
     }
 
     /**
-     * Execute tag command
+     * Execute commit command
      *
      * @param InputInterface  $input
      * @param OutputInterface $output
@@ -74,11 +69,11 @@ EOT
     {
         // Welcome
         $output->writeln(
-            '<info>Welcome to the Cypress GitElephantBundle tag command.</info>'
+            '<info>Welcome to the Cypress GitElephantBundle commit command.</info>'
         );
         if ($input->getOption('no-push')) {
             $output->writeln(
-                '<comment>--no-push option enabled (this option disable push tag to remote repository)</comment>'
+                '<comment>--no-push option enabled (this option disable push commit to remote repository)</comment>'
             );
         }
 
@@ -92,11 +87,11 @@ EOT
         /** @var Repository $repository */
         foreach ($rc as $key => $repository) {
             if ($key == 0 || $key > 0 && $input->getOption('all')) {
-                $repository->createTag($input->getArgument('tag'), null, $input->getArgument('comment') ? $input->getArgument('comment') : null);
+                $repository->commit($input->getArgument('message'));
                 if (!$input->getOption('no-push')) {
                     $repository->push();
                 }
-                $output->writeln('Set tag ' . $input->getArgument('tag') . ' to local repository ' . $repository->getName() . (!$input->getOption('no-push') ? ' and pushed to remote.' : ''));
+                $output->writeln('Set commit to local repository ' . $repository->getName() . (!$input->getOption('no-push') ? ' and pushed to remote.' : ''));
             }
         }
     }
