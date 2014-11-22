@@ -14,33 +14,31 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Helper\ProgressHelper;
 
 /**
- * Class MergeCommand
+ * Class HitCommand
  *
  * @category Command
  * @package  Cypress\GitElephantBundle\Command
  * @author   David Romaní <david@flux.cat>
  */
-class MergeCommand extends ContainerAwareCommand
+class HitCommand extends ContainerAwareCommand
 {
     /**
-     * Merge command configuration
+     * Hit command configuration
      */
     protected function configure()
     {
-        $this->setName('cypress:git:merge')
+        $this->setName('cypress:git:hit')
             ->setDefinition(
                 array(
                     new InputArgument(
                         'source',
                         InputArgument::REQUIRED,
-                        'Source branch',
-                        'devel' // default source branch
+                        'Source branch'
                     ),
                     new InputArgument(
                         'destination',
                         InputArgument::REQUIRED,
-                        'Destination branch',
-                        'master' // default destination branch
+                        'Destination branch'
                     ),
                 )
             )
