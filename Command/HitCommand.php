@@ -134,8 +134,26 @@ EOT
             '--all' => $input->getOption('all'),
         );
         $input = new ArrayInput($arguments);
+        // tag must apply to destination branch
+        /** @var Repository $repository */
+        foreach ($rc as $key => $repository) {
+            if ($key == 0) {
+                /** @var Branch $destination */
+                $destination = $repository->getBranch($input->getArgument('destination'));
+                $repository->checkout($destination->getName());
+            }
+        }
         $returnCode = $command->run($input, $output);
         $output->writeln('Set tag ' . $input->getArgument('tag') . ' done' . (!$input->getOption('no-push') ? ' and pushed to remote.' : ''));
         $output->writeln('· return code: ' . $returnCode);
+        // change to source branch
+        /** @var Repository $repository */
+        foreach ($rc as $key => $repository) {
+            if ($key == 0) {
+                /** @var Branch $destination */
+                $destination = $repository->getBranch($input->getArgument('source'));
+                $repository->checkout($destination->getName());
+            }
+        }
     }
 }
