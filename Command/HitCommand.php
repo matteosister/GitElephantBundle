@@ -32,6 +32,16 @@ class HitCommand extends ContainerAwareCommand
             ->setDefinition(
                 array(
                     new InputArgument(
+                        'tag',
+                        InputArgument::REQUIRED,
+                        'Tag title'
+                    ),
+                    new InputArgument(
+                        'comment',
+                        InputArgument::OPTIONAL,
+                        'Tag comment'
+                    ),
+                    new InputArgument(
                         'source',
                         InputArgument::OPTIONAL,
                         'Source branch',
@@ -42,16 +52,6 @@ class HitCommand extends ContainerAwareCommand
                         InputArgument::OPTIONAL,
                         'Destination branch',
                         'master' // default destination branch
-                    ),
-                    new InputArgument(
-                        'tag',
-                        InputArgument::REQUIRED,
-                        'Tag title'
-                    ),
-                    new InputArgument(
-                        'comment',
-                        InputArgument::OPTIONAL,
-                        'Tag comment'
                     ),
                 )
             )
