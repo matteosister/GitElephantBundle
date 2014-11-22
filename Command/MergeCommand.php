@@ -32,13 +32,13 @@ class MergeCommand extends ContainerAwareCommand
                 array(
                     new InputArgument(
                         'source',
-                        InputArgument::REQUIRED,
+                        InputArgument::OPTIONAL,
                         'Source branch',
                         'devel' // default source branch
                     ),
                     new InputArgument(
                         'destination',
-                        InputArgument::REQUIRED,
+                        InputArgument::OPTIONAL,
                         'Destination branch',
                         'master' // default destination branch
                     ),
