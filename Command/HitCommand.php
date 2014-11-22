@@ -119,10 +119,11 @@ EOT
             '--fast-forward' => $input->getOption('fast-forward'),
             '--all' => $input->getOption('all'),
         );
-        $input = new ArrayInput($arguments);
-        $returnCode = $command->run($input, $output);
-        $output->writeln('Merge from ' . $input->getArgument('source') . ' branch to ' . $input->getArgument('destination') . ' done' . (!$input->getOption('no-push') ? ' and pushed to remote.' : ''));
-        $output->writeln('· return code: ' . $returnCode);
+        $inputMergeCommand = new ArrayInput($arguments);
+        $returnCode = $command->run($inputMergeCommand, $output);
+        if ($returnCode != 0) {
+            $output->writeln('··· return code: ' . $returnCode);
+        }
 
         // Tag
         $command = $this->getApplication()->find('cypress:git:tag');
@@ -133,7 +134,7 @@ EOT
             '--no-push' => $input->getOption('no-push'),
             '--all' => $input->getOption('all'),
         );
-        $input = new ArrayInput($arguments);
+        $inputTagCommand = new ArrayInput($arguments);
         // tag must apply to destination branch
         /** @var Repository $repository */
         foreach ($rc as $key => $repository) {
@@ -143,9 +144,10 @@ EOT
                 $repository->checkout($destination->getName());
             }
         }
-        $returnCode = $command->run($input, $output);
-        $output->writeln('Set tag ' . $input->getArgument('tag') . ' done' . (!$input->getOption('no-push') ? ' and pushed to remote.' : ''));
-        $output->writeln('· return code: ' . $returnCode);
+        $returnCode = $command->run($inputTagCommand, $output);
+        if ($returnCode != 0) {
+            $output->writeln('··· return code: ' . $returnCode);
+        }
         // change to source branch
         /** @var Repository $repository */
         foreach ($rc as $key => $repository) {
