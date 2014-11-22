@@ -6,6 +6,7 @@ use Cypress\GitElephantBundle\Collection\GitElephantRepositoryCollection;
 use GitElephant\Objects\Branch;
 use GitElephant\Repository;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
+use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
@@ -33,21 +34,33 @@ class HitCommand extends ContainerAwareCommand
                     new InputArgument(
                         'source',
                         InputArgument::REQUIRED,
-                        'Source branch'
+                        'Source branch',
+                        'devel' // default source branch
                     ),
                     new InputArgument(
                         'destination',
                         InputArgument::REQUIRED,
-                        'Destination branch'
+                        'Destination branch',
+                        'master' // default destination branch
+                    ),
+                    new InputArgument(
+                        'tag',
+                        InputArgument::REQUIRED,
+                        'Tag title'
+                    ),
+                    new InputArgument(
+                        'comment',
+                        InputArgument::OPTIONAL,
+                        'Tag comment'
                     ),
                 )
             )
-            ->setDescription('Merge without fast forward from source to destination branch and push to remote repository')
+            ->setDescription('Merge without fast forward from source to destination branch, tag destination branch and push to remote repository')
             ->addOption(
                 'no-push',
                 null,
                 InputOption::VALUE_NONE,
-                'If set, the task won\'t push destination branch to remote repository'
+                'If set, the task won\'t push to remote repository'
             )
             ->addOption(
                 'fast-forward',
@@ -59,17 +72,17 @@ class HitCommand extends ContainerAwareCommand
                 'all',
                 null,
                 InputOption::VALUE_NONE,
-                'If set, will merge to all repositories'
+                'If set, command will apply to all repositories'
             )
             ->setHelp(
                 <<<EOT
-<info>cypress:git:merge</info> command will merge without fast forward option from source to destination branch and push to remote repository. Only apply fisrt repository, use --all option to apply all repositories. Use --no-push to commit only on your local repository. Apply --fast-forward to disable no fast forward merge option.
+<info>cypress:git:hit</info> combo command to merge without fast forward option from source to destination branch, tag destination branch and push to remote repository. Only apply fisrt repository, use --all option to apply all repositories. Use --no-push to commit only on your local repository. Apply --fast-forward to disable no fast forward merge option.
 EOT
             );
     }
 
     /**
-     * Execute merge command
+     * Execute hit command
      *
      * @param InputInterface  $input
      * @param OutputInterface $output
@@ -81,11 +94,11 @@ EOT
     {
         // Welcome
         $output->writeln(
-            '<info>Welcome to the Cypress GitElephantBundle merge command.</info>'
+            '<info>Welcome to the Cypress GitElephantBundle hit command.</info>'
         );
         if ($input->getOption('no-push')) {
             $output->writeln(
-                '<comment>--no-push option enabled (this option disable push destination branch to remote repository)</comment>'
+                '<comment>--no-push option enabled (this option disable push to remote repository feature)</comment>'
             );
         }
 
@@ -96,27 +109,33 @@ EOT
             throw new \Exception('Must have at least one Git repository. See https://github.com/matteosister/GitElephantBundle#how-to-use');
         }
 
-        /** @var Repository $repository */
-        foreach ($rc as $key => $repository) {
-            if ($key == 0 || $key > 0 && $input->getOption('all')) {
-                /** @var Branch $source */
-                $source = $repository->getBranch($input->getArgument('source'));
-                if (is_null($source)) {
-                    throw new \Exception('Source branch ' . $input->getArgument('source') . ' doesn\'t exists');
-                }
-                /** @var Branch $destination */
-                $destination = $repository->getBranch($input->getArgument('destination'));
-                if (is_null($destination)) {
-                    throw new \Exception('Destination branch ' . $input->getArgument('destination') . ' doesn\'t exists');
-                }
-                $repository->checkout($destination->getName());
-                $repository->merge($source, '', (!$input->getOption('fast-forward') ? 'no-ff' : 'ff-only'));
-                if (!$input->getOption('no-push')) {
-                    $repository->push();
-                }
-                $repository->checkout($input->getArgument('source'));
-                $output->writeln('Merge from ' . $input->getArgument('source') . ' branch to ' . $input->getArgument('destination') . ' done' . (!$input->getOption('no-push') ? ' and pushed to remote.' : ''));
-            }
-        }
+        // Merge
+        $command = $this->getApplication()->find('cypress:git:merge');
+        $arguments = array(
+            'command' => 'cypress:git:merge',
+            'source' => $input->getArgument('source'),
+            'destination' => $input->getArgument('destination'),
+            '--no-push' => $input->getOption('no-push'),
+            '--fast-forward' => $input->getOption('fast-forward'),
+            '--all' => $input->getOption('all'),
+        );
+        $input = new ArrayInput($arguments);
+        $returnCode = $command->run($input, $output);
+        $output->writeln('Merge from ' . $input->getArgument('source') . ' branch to ' . $input->getArgument('destination') . ' done' . (!$input->getOption('no-push') ? ' and pushed to remote.' : ''));
+        $output->writeln('· return code: ' . $returnCode);
+
+        // Tag
+        $command = $this->getApplication()->find('cypress:git:tag');
+        $arguments = array(
+            'command' => 'cypress:git:tag',
+            'tag' => $input->getArgument('tag'),
+            'comment' => $input->getArgument('comment'),
+            '--no-push' => $input->getOption('no-push'),
+            '--all' => $input->getOption('all'),
+        );
+        $input = new ArrayInput($arguments);
+        $returnCode = $command->run($input, $output);
+        $output->writeln('Set tag ' . $input->getArgument('tag') . ' done' . (!$input->getOption('no-push') ? ' and pushed to remote.' : ''));
+        $output->writeln('· return code: ' . $returnCode);
     }
 }
