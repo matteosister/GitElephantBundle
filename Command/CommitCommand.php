@@ -41,7 +41,7 @@ class CommitCommand extends ContainerAwareCommand
                 'no-push',
                 null,
                 InputOption::VALUE_NONE,
-                'If set, the task won\'t push tag to remote repository'
+                'If set, the task won\'t push commit to remote repository'
             )
             ->addOption(
                 'no-stage-all',
