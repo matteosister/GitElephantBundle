@@ -3,6 +3,7 @@
 namespace Cypress\GitElephantBundle\Command;
 
 use Cypress\GitElephantBundle\Collection\GitElephantRepositoryCollection;
+use GitElephant\Objects\Remote;
 use GitElephant\Repository;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputArgument;
@@ -10,7 +11,6 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\Output;
 use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Component\Console\Helper\ProgressHelper;
 
 /**
  * Class TagCommand
@@ -41,12 +41,12 @@ class TagCommand extends ContainerAwareCommand
                     ),
                 )
             )
-            ->setDescription('Tag current commit and push to remote repository')
+            ->setDescription('Tag current commit and push to all remotes')
             ->addOption(
                 'no-push',
                 null,
                 InputOption::VALUE_NONE,
-                'If set, the task won\'t push tag to remote repository'
+                'If set, the task won\'t push tag to remotes'
             )
             ->addOption(
                 'all',
@@ -56,7 +56,7 @@ class TagCommand extends ContainerAwareCommand
             )
             ->setHelp(
                 <<<EOT
-<info>cypress:git:tag</info> command will tag your current commit and push to remote repository. Only apply fisrt repository, use --all option to apply all repositories. Use --no-push to tag only on your local repository.
+<info>cypress:git:tag</info> command will tag your current commit and push current branch to all remotes. Only apply fisrt repository, use --all option to apply all repositories. Use --no-push to commit only on your local repository.
 EOT
             );
     }
@@ -78,7 +78,7 @@ EOT
         );
         if ($input->getOption('no-push')) {
             $output->writeln(
-                '<comment>--no-push option enabled (this option disable push tag to remote repository)</comment>'
+                '<comment>--no-push option enabled (this option disable push tag to remotes)</comment>'
             );
         }
 
@@ -94,9 +94,12 @@ EOT
             if ($key == 0 || $key > 0 && $input->getOption('all')) {
                 $repository->createTag($input->getArgument('tag'), null, $input->getArgument('comment') ? $input->getArgument('comment') : null);
                 if (!$input->getOption('no-push')) {
-                    $repository->push();
+                    /** @var Remote $remote */
+                    foreach ($repository->getRemotes() as $remote) {
+                        $repository->push($remote->getName(), $repository->getMainBranch()->getName()); // Push current branch to all remotes
+                    }
                 }
-                $output->writeln('Set tag ' . $input->getArgument('tag') . ' to local repository ' . $repository->getName() . (!$input->getOption('no-push') ? ' and pushed to remote.' : ''));
+                $output->writeln('Set tag ' . $input->getArgument('tag') . ' to local repository ' . $repository->getName() . (!$input->getOption('no-push') ? ' and pushed to all remotes.' : ''));
             }
         }
     }
