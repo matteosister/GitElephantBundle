@@ -187,7 +187,7 @@ Available console commands
 
 **cypress:git:commit**
 
-This command is useful to commit (default stage all) all changes and push to remote repository.
+This command is useful to commit (default stage all) all changes in current branch and push to all remotes.
 
 ``` bash
 $ php app/console cypress:git:commit [--no-push] [--no-stage-all] [--all] message
@@ -195,7 +195,7 @@ $ php app/console cypress:git:commit [--no-push] [--no-stage-all] [--all] messag
 
 **cypress:git:tag**
 
-This command is useful to tag current commit and push to remote repository.
+This command is useful to tag current commit and push to all remotes.
 
 ``` bash
 $ php app/console cypress:git:tag [--no-push] [--all] tag [comment]
@@ -203,7 +203,7 @@ $ php app/console cypress:git:tag [--no-push] [--all] tag [comment]
 
 **cypress:git:merge**
 
-This command will merge (default without fast forward) from source (default devel) to destination (default master) branch and push to remote repository.
+This command will merge (default without fast forward) from source (default devel) to destination (default master) branch and push to all remotes.
 
 ``` bash
 $ php app/console cypress:git:merge [--no-push] [--fast-forward] [--all] [source] [destination]
@@ -211,7 +211,7 @@ $ php app/console cypress:git:merge [--no-push] [--fast-forward] [--all] [source
 
 **cypress:git:hit**
 
-Combo command to merge without fast forward option from source to destination branch, tag destination branch and push to remote repository.
+Combo command to merge without fast forward option from source to destination branch, tag destination branch and push to all remotes.
 
 ``` bash
 $ php app/console cypress:git:hit [--no-push] [--fast-forward] [--all] tag [comment] [source] [destination]
