@@ -12,7 +12,6 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\Output;
 use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Component\Console\Helper\ProgressHelper;
 
 /**
  * Class HitCommand
@@ -55,12 +54,12 @@ class HitCommand extends ContainerAwareCommand
                     ),
                 )
             )
-            ->setDescription('Merge without fast forward from source to destination branch, tag destination branch and push to remote repository')
+            ->setDescription('Merge without fast forward from source to destination branch, tag destination branch and push to all remotes')
             ->addOption(
                 'no-push',
                 null,
                 InputOption::VALUE_NONE,
-                'If set, the task won\'t push to remote repository'
+                'If set, the task won\'t push to remotes'
             )
             ->addOption(
                 'fast-forward',
@@ -76,7 +75,7 @@ class HitCommand extends ContainerAwareCommand
             )
             ->setHelp(
                 <<<EOT
-<info>cypress:git:hit</info> combo command to merge without fast forward option from source to destination branch, tag destination branch and push to remote repository. Only apply fisrt repository, use --all option to apply all repositories. Use --no-push to commit only on your local repository. Apply --fast-forward to disable no fast forward merge option.
+<info>cypress:git:hit</info> combo command to merge without fast forward option from source to destination branch, tag destination branch and push to all remotes. Only apply fisrt repository, use --all option to apply all repositories. Use --no-push to commit only on your local repository. Apply --fast-forward to disable no fast forward merge option.
 EOT
             );
     }
@@ -98,7 +97,7 @@ EOT
         );
         if ($input->getOption('no-push')) {
             $output->writeln(
-                '<comment>--no-push option enabled (this option disable push to remote repository feature)</comment>'
+                '<comment>--no-push option enabled (this option disable push to remotes)</comment>'
             );
         }
 
