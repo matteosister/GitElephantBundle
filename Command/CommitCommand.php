@@ -11,7 +11,6 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\Output;
 use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Component\Console\Helper\ProgressHelper;
 
 /**
  * Class CommitCommand
@@ -37,12 +36,12 @@ class CommitCommand extends ContainerAwareCommand
                     ),
                 )
             )
-            ->setDescription('Commit and push to remote repository')
+            ->setDescription('Commit and push current branch to all remotes')
             ->addOption(
                 'no-push',
                 null,
                 InputOption::VALUE_NONE,
-                'If set, the task won\'t push commit to remote repository'
+                'If set, the task won\'t push commit to remotes'
             )
             ->addOption(
                 'no-stage-all',
@@ -54,11 +53,11 @@ class CommitCommand extends ContainerAwareCommand
                 'all',
                 null,
                 InputOption::VALUE_NONE,
-                'If set, will commit to all repositories'
+                'If set, will commit and push to all repositories'
             )
             ->setHelp(
                 <<<EOT
-<info>cypress:git:commit</info> command will commit and push current branch to all remotes repository. Only apply fisrt repository, use --all option to apply all repositories. Use --no-push to commit only on your local repository without pushing. Use --no-stage-all to disable stage all the working tree content feature.
+<info>cypress:git:commit</info> command will commit and push current branch to all remotes. Only apply fisrt repository, use --all option to apply all repositories. Use --no-push to commit only on your local repository without pushing. Use --no-stage-all to disable stage all the working tree content feature.
 EOT
             );
     }
@@ -80,7 +79,7 @@ EOT
         );
         if ($input->getOption('no-push')) {
             $output->writeln(
-                '<comment>--no-push option enabled (this option disable push commit to remote repository)</comment>'
+                '<comment>--no-push option enabled (this option disable push commit to remotes)</comment>'
             );
         }
 
