@@ -3,6 +3,7 @@
 namespace Cypress\GitElephantBundle\Command;
 
 use Cypress\GitElephantBundle\Collection\GitElephantRepositoryCollection;
+use GitElephant\Objects\Remote;
 use GitElephant\Repository;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputArgument;
@@ -57,7 +58,7 @@ class CommitCommand extends ContainerAwareCommand
             )
             ->setHelp(
                 <<<EOT
-<info>cypress:git:commit</info> command will commit and push to remote repository. Only apply fisrt repository, use --all option to apply all repositories. Use --no-push to commit only on your local repository. Use --no-stage-all to not stage all the working tree content.
+<info>cypress:git:commit</info> command will commit and push current branch to all remotes repository. Only apply fisrt repository, use --all option to apply all repositories. Use --no-push to commit only on your local repository without pushing. Use --no-stage-all to disable stage all the working tree content feature.
 EOT
             );
     }
@@ -95,9 +96,12 @@ EOT
             if ($key == 0 || $key > 0 && $input->getOption('all')) {
                 $repository->commit($input->getArgument('message'), !$input->getOption('no-stage-all'));
                 if (!$input->getOption('no-push')) {
-                    $repository->push();
+                    /** @var Remote $remote */
+                    foreach ($repository->getRemotes() as $remote) {
+                        $repository->push($remote->getName(), $repository->getMainBranch()->getName()); // Push last current branch commit to all remotes
+                    }
                 }
-                $output->writeln('Set commit to local repository ' . $repository->getName() . (!$input->getOption('no-push') ? ' and pushed to remote.' : ''));
+                $output->writeln('New commit to local repository created ' . $repository->getName() . (!$input->getOption('no-push') ? ' and pushed to all remotes.' : ''));
             }
         }
     }
