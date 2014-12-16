@@ -4,6 +4,7 @@ namespace Cypress\GitElephantBundle\Command;
 
 use Cypress\GitElephantBundle\Collection\GitElephantRepositoryCollection;
 use GitElephant\Objects\Branch;
+use GitElephant\Objects\Remote;
 use GitElephant\Repository;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputArgument;
@@ -11,7 +12,6 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\Output;
 use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Component\Console\Helper\ProgressHelper;
 
 /**
  * Class MergeCommand
@@ -44,12 +44,12 @@ class MergeCommand extends ContainerAwareCommand
                     ),
                 )
             )
-            ->setDescription('Merge without fast forward from source to destination branch and push to remote repository')
+            ->setDescription('Merge without fast forward from source to destination branch and push destination branch to all remotes')
             ->addOption(
                 'no-push',
                 null,
                 InputOption::VALUE_NONE,
-                'If set, the task won\'t push destination branch to remote repository'
+                'If set, the task won\'t push destination branch to remotes'
             )
             ->addOption(
                 'fast-forward',
@@ -61,11 +61,11 @@ class MergeCommand extends ContainerAwareCommand
                 'all',
                 null,
                 InputOption::VALUE_NONE,
-                'If set, will merge to all repositories'
+                'If set, will merge and push to all repositories'
             )
             ->setHelp(
                 <<<EOT
-<info>cypress:git:merge</info> command will merge without fast forward option from source to destination branch and push to remote repository. Only apply fisrt repository, use --all option to apply all repositories. Use --no-push to commit only on your local repository. Apply --fast-forward to disable no fast forward merge option.
+<info>cypress:git:merge</info> command will merge without fast forward option from source to destination branch and push destination branch to all remotes. Only apply fisrt repository, use --all option to apply all repositories. Use --no-push to commit only on your local repository. Apply --fast-forward to disable no fast forward merge option.
 EOT
             );
     }
@@ -87,7 +87,7 @@ EOT
         );
         if ($input->getOption('no-push')) {
             $output->writeln(
-                '<comment>--no-push option enabled (this option disable push destination branch to remote repository)</comment>'
+                '<comment>--no-push option enabled (this option disable push destination branch to remotes)</comment>'
             );
         }
 
@@ -114,10 +114,13 @@ EOT
                 $repository->checkout($destination->getName());
                 $repository->merge($source, '', (!$input->getOption('fast-forward') ? 'no-ff' : 'ff-only'));
                 if (!$input->getOption('no-push')) {
-                    $repository->push();
+                    /** @var Remote $remote */
+                    foreach ($repository->getRemotes() as $remote) {
+                        $repository->push($remote->getName(), $repository->getMainBranch()->getName()); // Push destination branch to all remotes
+                    }
                 }
                 $repository->checkout($input->getArgument('source'));
-                $output->writeln('Merge from ' . $input->getArgument('source') . ' branch to ' . $input->getArgument('destination') . ' done' . (!$input->getOption('no-push') ? ' and pushed to remote.' : ''));
+                $output->writeln('Merge from ' . $input->getArgument('source') . ' branch to ' . $input->getArgument('destination') . ' done' . (!$input->getOption('no-push') ? ' and pushed to all remotes.' : ''));
             }
         }
     }

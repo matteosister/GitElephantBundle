@@ -3,6 +3,7 @@
 namespace Cypress\GitElephantBundle\Command;
 
 use Cypress\GitElephantBundle\Collection\GitElephantRepositoryCollection;
+use GitElephant\Objects\Remote;
 use GitElephant\Repository;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputArgument;
@@ -10,7 +11,6 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\Output;
 use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Component\Console\Helper\ProgressHelper;
 
 /**
  * Class CommitCommand
@@ -36,12 +36,12 @@ class CommitCommand extends ContainerAwareCommand
                     ),
                 )
             )
-            ->setDescription('Commit and push to remote repository')
+            ->setDescription('Commit and push current branch to all remotes')
             ->addOption(
                 'no-push',
                 null,
                 InputOption::VALUE_NONE,
-                'If set, the task won\'t push commit to remote repository'
+                'If set, the task won\'t push commit to remotes'
             )
             ->addOption(
                 'no-stage-all',
@@ -53,11 +53,11 @@ class CommitCommand extends ContainerAwareCommand
                 'all',
                 null,
                 InputOption::VALUE_NONE,
-                'If set, will commit to all repositories'
+                'If set, will commit and push to all repositories'
             )
             ->setHelp(
                 <<<EOT
-<info>cypress:git:commit</info> command will commit and push to remote repository. Only apply fisrt repository, use --all option to apply all repositories. Use --no-push to commit only on your local repository. Use --no-stage-all to not stage all the working tree content.
+<info>cypress:git:commit</info> command will commit and push current branch to all remotes. Only apply fisrt repository, use --all option to apply all repositories. Use --no-push to commit only on your local repository without pushing. Use --no-stage-all to disable stage all the working tree content feature.
 EOT
             );
     }
@@ -79,7 +79,7 @@ EOT
         );
         if ($input->getOption('no-push')) {
             $output->writeln(
-                '<comment>--no-push option enabled (this option disable push commit to remote repository)</comment>'
+                '<comment>--no-push option enabled (this option disable push commit to remotes)</comment>'
             );
         }
 
@@ -95,9 +95,12 @@ EOT
             if ($key == 0 || $key > 0 && $input->getOption('all')) {
                 $repository->commit($input->getArgument('message'), !$input->getOption('no-stage-all'));
                 if (!$input->getOption('no-push')) {
-                    $repository->push();
+                    /** @var Remote $remote */
+                    foreach ($repository->getRemotes() as $remote) {
+                        $repository->push($remote->getName(), $repository->getMainBranch()->getName()); // Push last current branch commit to all remotes
+                    }
                 }
-                $output->writeln('Set commit to local repository ' . $repository->getName() . (!$input->getOption('no-push') ? ' and pushed to remote.' : ''));
+                $output->writeln('New commit to local repository created ' . $repository->getName() . (!$input->getOption('no-push') ? ' and pushed to all remotes.' : ''));
             }
         }
     }
