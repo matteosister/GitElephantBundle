@@ -12,7 +12,7 @@ Watch a [simple live example](http://gitelephant.cypresslab.net/GitElephant) of 
 How to install
 --------------
 
-**Method 1 - deps file**
+**Method 1 - deps file (for Symfony 2.0)**
 
 - Add the GitElephant library and the bundle itself in the deps file
 
@@ -26,12 +26,11 @@ How to install
         git=git://github.com/matteosister/GitElephantBundle.git
         target=/bundles/Cypress/GitElephantBundle
 
-- register the two namespaces in the autoload.php file
+- Register the two namespaces in the autoload.php file
 
 *app/autoload.php*
 
 ``` php
-<?php
 $loader->registerNamespaces(array(
     // ...other namespaces
     'GitElephant'      => __DIR__.'/../vendor/git-elephant/src',
@@ -39,12 +38,29 @@ $loader->registerNamespaces(array(
 ));
 ```
 
-- register the bundle in the kernel file
+**Method 2 - composer for Symfony 2.1 and above (recommended)**
+
+- Add the following line to the `composer.json` file:
+
+``` json
+{
+    "require": {
+        "cypresslab/gitelephant-bundle": "dev-master"
+    }
+}
+```
+
+- Execute composer update command
+
+``` bash
+$ composer update
+```
+
+- Register the bundle in the kernel file
 
 *app/AppKernel.php*
 
 ``` php
-<?php
 class AppKernel extends Kernel
 {
     public function registerBundles()
@@ -59,7 +75,28 @@ class AppKernel extends Kernel
 }
 ```
 
-**Method 2 - submodules**
+>Is recommended to register this bundle only in development environment for safety reasons.
+
+``` php
+class AppKernel extends Kernel
+{
+    public function registerBundles()
+    {
+        $bundles = array(
+            // ...other bundles
+        );
+
+        if (in_array($this->getEnvironment(), array('dev', 'test'))) {
+            // ...other development and testing bundles
+            $bundles[] = new Cypress\GitElephantBundle\CypressGitElephantBundle();
+        }
+
+        return $bundles;
+    }
+}
+```
+
+**Method 3 - submodules**
 
 You can also manage the two git repositories with git and submodules. It could be a mess if you don't know what you do, but I personally prefer this way
 
@@ -103,7 +140,6 @@ Now, inside your controllers, you can easily access the GitElephant library with
 The repository path could also be a bare repository (useful for web servers). But without a checked out copy you won't be able to modify the repository state. You will be able to show the repository, but not, for example, create a new commit
 
 ``` php
-<?php
 class AwesomeController extends Controller
 {
     /**
@@ -145,6 +181,41 @@ Add this to your **dev** configuration file *app/config/config_dev.yml*
         profiler_repository_path: "%kernel.root_dir%/../"
 
 If you use git with Symfony2, with the above configuration, you can see directly from the browser the branch you are in. Click on the icon and you get a list of the last 10 commits for the branch you are in.
+
+Available console commands
+--------------------------
+
+**cypress:git:commit**
+
+This command is useful to commit (default stage all) all changes in current branch and push to all remotes.
+
+``` bash
+$ php app/console cypress:git:commit [--no-push] [--no-stage-all] [--all] message
+```
+
+**cypress:git:tag**
+
+This command is useful to tag current commit and push to all remotes.
+
+``` bash
+$ php app/console cypress:git:tag [--no-push] [--all] tag [comment]
+```
+
+**cypress:git:merge**
+
+This command will merge (default without fast forward) from source (default devel) to destination (default master) branch and push to all remotes.
+
+``` bash
+$ php app/console cypress:git:merge [--no-push] [--fast-forward] [--all] [source] [destination]
+```
+
+**cypress:git:hit**
+
+Combo command to merge without fast forward option from source to destination branch, tag destination branch and push to all remotes.
+
+``` bash
+$ php app/console cypress:git:hit [--no-push] [--fast-forward] [--all] tag [comment] [source] [destination]
+```
 
 Example
 -------
