@@ -4,7 +4,6 @@
     "description": "GitElephant bundle for Symfony2",
     "keywords": ["git"],
     "homepage": "https://github.com/matteosister/GitElephant",
-    "version": "0.0.2",
     "license": "LGPL-3.0+",
     "authors": [
         {
