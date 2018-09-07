@@ -12,16 +12,10 @@
     </parameters>
 
     <services>
-        <service id="cypress_git_elephant.git_binary"
-                 class="%cypress_git_elephant.binary.class%"
-                 public="true">
-            <argument>%cypress_git_elephant.binary_path%</argument>
-        </service>
-
         <service id="cypress_git_elephant.repository_collection"
                 class="%cypress_git_elephant.repository_collection.class%">
             <argument>%cypress_git_elephant.repositories%</argument>
-            <argument type="service" id="cypress_git_elephant.git_binary" />
+            <argument>%cypress_git_elephant.binary_path%</argument>
         </service>
         <service id="git_repositories" alias="cypress_git_elephant.repository_collection" />
 

@@ -1,44 +1,11 @@
 # GitElephantBundle #
 
-This is a simple bundle to use the [GitElephant library](https://github.com/matteosister/GitElephant) in a Symfony2 project
-
-Watch a [simple live example](http://gitelephant.cypresslab.net/GitElephant) of what you can do with [GitElephant](https://github.com/matteosister/GitElephant), GitElephantBundle, Symfony2 and a git repository...
-
-[Download the demo bundle code](https://github.com/matteosister/GitElephantDemoBundle) used in the live example
-
-![GitElephantBundle wdt](https://github.com/matteosister/GitElephantBundle/raw/master/preview.png)
-
+This is a simple bundle to use the [GitElephant library](https://github.com/matteosister/GitElephant) in a Symfony project.
 
 How to install
 --------------
 
-**Method 1 - deps file (for Symfony 2.0)**
-
-- Add the GitElephant library and the bundle itself in the deps file
-
-*deps*
-
-    [GitElephant]
-        git=git://github.com/matteosister/GitElephant.git
-        target=git-elephant
-
-    [GitElephantBundle]
-        git=git://github.com/matteosister/GitElephantBundle.git
-        target=/bundles/Cypress/GitElephantBundle
-
-- Register the two namespaces in the autoload.php file
-
-*app/autoload.php*
-
-``` php
-$loader->registerNamespaces(array(
-    // ...other namespaces
-    'GitElephant'      => __DIR__.'/../vendor/git-elephant/src',
-    'Cypress'          => __DIR__.'/../vendor/bundles',
-));
-```
-
-**Method 2 - composer for Symfony 2.1 and above (recommended)**
+**Method 1 - composer for Symfony 2.1 and above (recommended)**
 
 - Add the following line to the `composer.json` file:
 
@@ -96,7 +63,7 @@ class AppKernel extends Kernel
 }
 ```
 
-**Method 3 - submodules**
+**Method 2 - submodules**
 
 You can also manage the two git repositories with git and submodules. It could be a mess if you don't know what you do, but I personally prefer this way
 
@@ -220,4 +187,4 @@ $ php app/console cypress:git:hit [--no-push] [--fast-forward] [--all] tag [comm
 Example
 -------
 
-There is also a [demo bundle](https://github.com/matteosister/GitElephantDemoBundle) to see it in action
+There is also a [demo bundle](https://github.com/matteosister/GitElephantDemoBundle) to see it in action.
