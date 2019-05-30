@@ -21,7 +21,7 @@
         "symfony/framework-bundle": "^2.3|^3.0|^4.0",
         "symfony/http-foundation": "^2.3|^3.0|^4.0",
         "symfony/http-kernel": "^2.3|^3.0|^4.0",
-        "cypresslab/gitelephant": "^3.0"
+        "cypresslab/gitelephant": "^3.0|^4.0"
     },
     "autoload": {
         "psr-0": {
