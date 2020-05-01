@@ -17,8 +17,8 @@ class Configuration implements ConfigurationInterface
      */
     public function getConfigTreeBuilder()
     {
-        $treeBuilder = new TreeBuilder();
-        $rootNode = $treeBuilder->root('cypress_git_elephant');
+        $treeBuilder = new TreeBuilder('cypress_git_elephant');
+        $rootNode = $treeBuilder->getRootNode();
 
         $rootNode
             ->children()
