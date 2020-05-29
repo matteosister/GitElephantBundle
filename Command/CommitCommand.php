@@ -6,6 +6,7 @@ use Cypress\GitElephantBundle\Collection\GitElephantRepositoryCollection;
 use GitElephant\Objects\Remote;
 use GitElephant\Repository;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
+use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
@@ -19,8 +20,22 @@ use Symfony\Component\Console\Output\OutputInterface;
  * @package  Cypress\GitElephantBundle\Command
  * @author   David Romaní <david@flux.cat>
  */
-class CommitCommand extends ContainerAwareCommand
+class CommitCommand extends Command
 {
+
+    /**
+     * The collection of repositories from which one will be commiting
+     *
+     * @var GitElephantRepositoryCollection
+     */
+    private $repositories;
+
+    public function __construct(GitElephantRepositoryCollection $c)
+    {
+        $this->repositories = $c;
+        parent::__construct();
+    }
+
     /**
      * Commit command configuration
      */
@@ -83,15 +98,12 @@ EOT
             );
         }
 
-        /** @var GitElephantRepositoryCollection $rc */
-        $rc = $this->getContainer()->get('git_repositories');
-
-        if ($rc->count() == 0) {
+        if ($this->repositories->count() == 0) {
             throw new \Exception('Must have at least one Git repository. See https://github.com/matteosister/GitElephantBundle#how-to-use');
         }
 
         /** @var Repository $repository */
-        foreach ($rc as $key => $repository) {
+        foreach ($this->repositories as $key => $repository) {
             if ($key == 0 || $key > 0 && $input->getOption('all')) {
                 $repository->commit($input->getArgument('message'), !$input->getOption('no-stage-all'));
                 if (!$input->getOption('no-push')) {
